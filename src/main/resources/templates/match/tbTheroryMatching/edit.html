@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+						<input id="theory_guid" name="theory_guid" th:value="${tbTheroryMatching.theoryGuid}"  type="hidden">
+							<div  class="sec_editDiv">
+								<div class="left_sec">
+									<label class="control-label left_label">强度等级：</label>
+									<input id="strengthGrade" name="strengthGrade" class="form-control must input_text" type="text" th:value="${tbTheroryMatching.strengthGrade}">
+								</div>
+								<div class="right_sec">
+									<label class="control-label right_label">配比编号：</label>
+									<input id="matchNum" name="matchNum" class="form-control must input_text" type="text" th:value="${tbTheroryMatching.matchNum}">
+								</div><div style="clear:both"></div>
+
+							</div>
+							<div role="tabpanel" class="tab-pane " id="parts">
+								<div style="width:80%;margin-left:10%;margin-top:30px">
+									<ul  class="item_list" style="border-top:1px solid #e7e7e7">
+										<li>
+											<div class="istItemOption">
+												<span class="jxx_span" style="width:13%"><input  style="width: 13%;" value="名称"/></span>
+												<span class="jxx_span" style="width:13%"><input  style="width: 13%;" value="规格"/></span>
+												<span class="jxx_span" style="width:13%"><input  style="width: 13%" value="生产厂家"/></span>
+												<span class="jxx_span" style="width:13%"><input style="width: 13%" value="含水率"/></span>
+												<span class="jxx_span" style="width:13%"><input style="width: 13%" value="产地"/></span>
+												<span class="jxx_span" style="width:13%"><input style="width: 13%" value="每方用量"/></span>
+												<span class="jxx_span" style="width:13%"><input style="width: 13%" value="备注"/></span>
+												<p class="add_btn"></p>
+											</div>
+										</li>
+										<li th:each="tbTheroryMatchingTo:${tbTheroryMatchingList}">
+											<div class="istItemOption ItemOption" >
+												<span class="jxx_span" style="width:13%;border-bottom:1px solid #e7e7e7"><input  th:value="${tbTheroryMatchingTo.mtName}"class="mtName" style="width:13%" /></span>
+												<span class="jxx_span" style="width:13%;border-bottom:1px solid #e7e7e7" ><input th:value="${tbTheroryMatchingTo.mtSpec}" class="mtSpec" style="width:13%"/></span>
+												<span class="jxx_span" style="width:13%;border-bottom:1px solid #e7e7e7"  ><input  th:value="${tbTheroryMatchingTo.supplierName}" class="supplierName" style="width:13%"/></span>
+												<span class="jxx_span" style="width:13%;border-bottom:1px solid #e7e7e7"><input th:value="${tbTheroryMatchingTo.waterRate}" class="waterRate"   style="width:13%"/></span>
+												<span class="jxx_span" style="width:13%;border-bottom:1px solid #e7e7e7"><input th:value="${tbTheroryMatchingTo.produce}" class="produce"  style="width:13%"/></span>
+												<span class="jxx_span" style="width:13%;border-bottom:1px solid #e7e7e7"><input th:value="${tbTheroryMatchingTo.dosage}" class="dosage"  style="width:13%"/></span>
+												<span class="jxx_span" style="width:13%;border-bottom:1px solid #e7e7e7"><input th:value="${tbTheroryMatchingTo.remark}" class="remark"  style="width:13%"/></span>
+												<p class="remove_btn"></p>
+											</div>
+										</li>
+									</ul>
+
+									<ul class="item_list_hide" style="display:none">
+										<li>
+											<div class="istItemOption ItemOption">
+												<span class="jxx_span" style="width:13%;  overflow: initial;"><input  class="mtName" style="width:13%" /></span>
+												<span class="jxx_span" style="width:13%;cursor:not-allowed"><input class="mtSpec" style="width:13%" /></span>
+												<span class="jxx_span" style="width:13%;cursor:not-allowed"><input class="supplierName"  style="width:13%"/></span>
+												<span class="jxx_span" style="width:13%;padding:0"><input class="waterRate"    style="width:13%"/></span>
+												<span class="jxx_span" style="width:13%;padding:0"><input  class="produce"   style="width:13%"/></span>
+												<span class="jxx_span" style="width:13%;padding:0"><input  class="dosage"   style="width:13%"/></span>
+												<span class="jxx_span" style="width:13%;padding:0"><input  class="remark"   style="width:13%"/></span>
+												<p class="remove_btn"></p>
+											</div>
+										</li>
+									</ul>
+
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/match/tbTheroryMatching/edit.js">
+	</script>
+</body>
+</html>

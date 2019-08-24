@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">告警定义ID：</label>
+								<div class="col-sm-8">
+									<input id="defineId" name="defineId" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">发送时间：</label>
+								<div class="col-sm-8">
+									<input id="sendTime" name="sendTime" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">写入告警时间：</label>
+								<div class="col-sm-8">
+									<input id="writeTime" name="writeTime" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">msgGuid：</label>
+								<div class="col-sm-8">
+									<input id="msgGuid" name="msgGuid" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">是否阅读（0：未阅读 1：已阅读 2：忽略）：</label>
+								<div class="col-sm-8">
+									<input id="isRead" name="isRead" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">告警发送对象用户ID：</label>
+								<div class="col-sm-8">
+									<input id="userId" name="userId" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">发送次数：</label>
+								<div class="col-sm-8">
+									<input id="sendCount" name="sendCount" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">消息内容：</label>
+								<div class="col-sm-8">
+									<input id="msgContent" name="msgContent" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">告警消息类型（0：告警与消息 1：待办事项提醒）：</label>
+								<div class="col-sm-8">
+									<input id="msgType" name="msgType" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">告警消息级别（0：提示消息 1：一般告警 2：紧急告警 3：严重告警）：</label>
+								<div class="col-sm-8">
+									<input id="msgLevel" name="msgLevel" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">是否历史表记录 0：否；1：是：</label>
+								<div class="col-sm-8">
+									<input id="isHis" name="isHis" class="form-control" type="text">
+								</div>
+							</div>
+																					<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/alarm/tbAlarmWebReady/add.js">
+	</script>
+</body>
+</html>

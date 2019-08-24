@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.stock.dao.TbMtInDetailDao">
+
+	<select id="get" resultType="com.bootdo.stock.domain.TbMtInDetailDO">
+		select `order_detail_guid`,`order_guid`,`mt_code`,`plate_number`,`mt_name`,`rough_weight`,`tare_weight`,`net_weight`,`deduct_mix`,`unit_price`,`sum` from tb_mt_in_detail where order_detail_guid = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.stock.domain.TbMtInDetailDO">
+		select `order_detail_guid`,`order_guid`,`mt_code`,`plate_number`,`mt_name`,`rough_weight`,`tare_weight`,`net_weight`,`deduct_mix`,`unit_price`,`sum` from tb_mt_in_detail
+        <where>  
+		  		  <if test="orderDetailGuid != null and orderDetailGuid != ''"> and order_detail_guid = #{orderDetailGuid} </if>
+		  		  <if test="orderGuid != null and orderGuid != ''"> and order_guid = #{orderGuid} </if>
+		  		  <if test="mtCode != null and mtCode != ''"> and mt_code = #{mtCode} </if>
+		  		  <if test="plateNumber != null and plateNumber != ''"> and plate_number = #{plateNumber} </if>
+		  		  <if test="mtName != null and mtName != ''"> and mt_name = #{mtName} </if>
+		  		  <if test="roughWeight != null and roughWeight != ''"> and rough_weight = #{roughWeight} </if>
+		  		  <if test="tareWeight != null and tareWeight != ''"> and tare_weight = #{tareWeight} </if>
+		  		  <if test="netWeight != null and netWeight != ''"> and net_weight = #{netWeight} </if>
+		  		  <if test="deductMix != null and deductMix != ''"> and deduct_mix = #{deductMix} </if>
+		  		  <if test="unitPrice != null and unitPrice != ''"> and unit_price = #{unitPrice} </if>
+		  		  <if test="sum != null and sum != ''"> and sum = #{sum} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by order_detail_guid desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from tb_mt_in_detail
+		 <where>  
+		  		  <if test="orderDetailGuid != null and orderDetailGuid != ''"> and order_detail_guid = #{orderDetailGuid} </if>
+		  		  <if test="orderGuid != null and orderGuid != ''"> and order_guid = #{orderGuid} </if>
+		  		  <if test="mtCode != null and mtCode != ''"> and mt_code = #{mtCode} </if>
+		  		  <if test="plateNumber != null and plateNumber != ''"> and plate_number = #{plateNumber} </if>
+		  		  <if test="mtName != null and mtName != ''"> and mt_name = #{mtName} </if>
+		  		  <if test="roughWeight != null and roughWeight != ''"> and rough_weight = #{roughWeight} </if>
+		  		  <if test="tareWeight != null and tareWeight != ''"> and tare_weight = #{tareWeight} </if>
+		  		  <if test="netWeight != null and netWeight != ''"> and net_weight = #{netWeight} </if>
+		  		  <if test="deductMix != null and deductMix != ''"> and deduct_mix = #{deductMix} </if>
+		  		  <if test="unitPrice != null and unitPrice != ''"> and unit_price = #{unitPrice} </if>
+		  		  <if test="sum != null and sum != ''"> and sum = #{sum} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.stock.domain.TbMtInDetailDO" useGeneratedKeys="true" keyProperty="orderDetailGuid">
+		insert into tb_mt_in_detail
+		(
+          `order_detail_guid`,
+			`order_guid`,
+			`mt_code`, 
+			`plate_number`, 
+			`mt_name`, 
+			`rough_weight`, 
+			`tare_weight`, 
+			`net_weight`, 
+			`deduct_mix`, 
+			`unit_price`, 
+			`sum`
+		)
+		values
+		(
+		   #{orderDetailGuid},
+			#{orderGuid}, 
+			#{mtCode}, 
+			#{plateNumber}, 
+			#{mtName}, 
+			#{roughWeight}, 
+			#{tareWeight}, 
+			#{netWeight}, 
+			#{deductMix}, 
+			#{unitPrice}, 
+			#{sum}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.stock.domain.TbMtInDetailDO">
+		update tb_mt_in_detail 
+		<set>
+			<if test="orderGuid != null">`order_guid` = #{orderGuid}, </if>
+			<if test="mtCode != null">`mt_code` = #{mtCode}, </if>
+			<if test="plateNumber != null">`plate_number` = #{plateNumber}, </if>
+			<if test="mtName != null">`mt_name` = #{mtName}, </if>
+			<if test="roughWeight != null">`rough_weight` = #{roughWeight}, </if>
+			<if test="tareWeight != null">`tare_weight` = #{tareWeight}, </if>
+			<if test="netWeight != null">`net_weight` = #{netWeight}, </if>
+			<if test="deductMix != null">`deduct_mix` = #{deductMix}, </if>
+			<if test="unitPrice != null">`unit_price` = #{unitPrice}, </if>
+			<if test="sum != null">`sum` = #{sum}</if>
+		</set>
+		where order_detail_guid = #{orderDetailGuid}
+	</update>
+	
+	<delete id="remove">
+		delete from tb_mt_in_detail where order_detail_guid = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from tb_mt_in_detail where order_detail_guid in 
+		<foreach item="orderDetailGuid" collection="array" open="(" separator="," close=")">
+			#{orderDetailGuid}
+		</foreach>
+	</delete>
+
+</mapper>

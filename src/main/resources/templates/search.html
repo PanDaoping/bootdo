@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>信息搜索</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+    <link href="/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+    <link href="/css/animate.css" rel="stylesheet">
+    <link href="/css/style.css?v=4.1.0" rel="stylesheet">
+</head>
+<body id="search">
+<div class="panel panel-default" style="border-bottom: none; height: 97%;">
+    <div  style="padding: 4px 15px;">
+        <span style="display: inline-block; height: 55px; position: relative; line-height: 55px;margin-left: 15px;">
+            <!--<img id="logo" alt="image" style="display: inline-block" class="img-responsive img-rounded" height="40" width="40" src="../static/favicon.ico"/>-->
+            <b id="title" style="font-size: 30px;margin-left: 5px;"><a href="/index">工厂设备运营/维护统计情况</a></b>
+            <!--<a href="/index" style="font-size: 14px;margin-left:10px;">进入系统</a>-->
+        </span>
+        <!--<a href="/logout" class="roll-nav roll-right J_tabExit">-->
+            <!--<i class="fa fa fa-sign-out"></i> 退出-->
+        <!--</a>-->
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <!--第一行-->
+            <div class="col-sm-6" >
+                <div class="panel panel-default" style="height: 390px;">
+                    <div class="panel-heading">养护窑利用率统计情况</div>
+                    <div class="panel-body">
+                        <div class="row" style="height: 100px">
+                            <div>
+                                <span>aaa</span>
+                            </div>
+                        </div>
+                        <div class="row" class="col-md-12">
+                            <div class="col-md-2">
+                                <div id="qhyao" class="btn-group" data-toggle="buttons-radio">
+                                    <button class="btn btn-default btn-xs">前窑</button>
+                                    <button class="btn btn-default btn-xs">后窑</button>
+                                </div>
+                            </div>
+                            <div style="display:inline-block;width:40px;">
+                                <div class="form-group">
+                                    <label for="man" style="display:inline-block;width:20px;" class="control-label">满：</label>
+                                    <div >
+                                        <input type="text" style="display:inline-block;width:20px;" id="man" placeholder="39">
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="display:inline-block;width:40px;">
+                                <div class="form-group">
+                                    <label for="kong" style="display:inline-block;width:20px;" class="control-label">空：</label>
+                                    <div >
+                                        <input type="text" style="display:inline-block;width:20px;" id="kong" placeholder="39">
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="display:inline-block;width:60px;">
+                                <div class="form-group">
+                                    <label for="kongzhilv" style="display:inline-block;width:30px;" class="control-label">空置率：</label>
+                                    <div >
+                                        <input type="text"  style="display:inline-block;width:20px;" id="kongzhilv" placeholder="39">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="height: 250px">
+                            <div>
+                                <span>aaa</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="panel panel-default" style="height: 390px;">
+                    <div class="panel-heading">材料消耗统计情况</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div id="crku" class="btn-group" data-toggle="buttons-radio" style="position:absolute;left:40%;">
+                                <button class="btn btn-default btn-xs" onclick="onClxh(1)">出库</button>
+                                <button class="btn btn-default btn-xs" onclick="onClxh(2)">入库</button>
+                            </div>
+                        </div>
+                        <div class="row" style="position:absolute;top:80px;">
+                            <div style="width: 320px;height: 270px" id="xhcltjqk"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="panel panel-default" style="height: 390px;">
+                    <div class="panel-heading">混凝土使用统计情况</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div id="zxhao" style="height: 10px"class="btn-group" data-toggle="buttons-radio" style="position:absolute;left:40%;">
+                                <button class="btn btn-default btn-xs" onclick="onHntsytj(1)">总耗</button>
+                                <button class="btn btn-default btn-xs" onclick="onHntsytj(2)">线耗</button>
+                            </div>
+                        </div>
+                        <div class="row" style="position:absolute;top:80px;">
+                            <div style="width: 320px;height: 270px" id="hntsytj"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="panel panel-default" style="height: 300px;">
+                    <div class="panel-heading">设备保养次数统计情况</div>
+                    <div class="panel-body">
+                        <div style="width: 380px;height: 240px" id="echarts-bar-chart"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="panel panel-default" style="height: 300px;">
+                    <div class="panel-heading">设备故障统计情况</div>
+                    <div class="panel-body">
+                        <div style="width: 380px;height: 240px" id="sbgzqk"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="panel panel-default" style="height: 300px;">
+                    <div class="panel-heading">设备影响工时统计情况</div>
+                    <div class="panel-body">
+                        <div style="width: 380px;height: 240px" id="sbyxgs"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 全局js -->
+<script src="/js/jquery.min.js?v=2.1.4"></script>
+<script src="/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="/js/plugins/layer/layer.min.js"></script>
+<!-- 全局js -->
+<script src="/js/jquery.min.js?v=2.1.4"></script>
+<script src="/js/bootstrap.min.js?v=3.3.6"></script>
+
+<!-- ECharts -->
+<script src="/js/plugins/echarts/echarts-all.js"></script>
+
+<!-- 自定义js -->
+<script src="/js/content.js?v=1.0.0"></script>
+
+<script src="/js/search.js"></script>
+</body>
+</html>

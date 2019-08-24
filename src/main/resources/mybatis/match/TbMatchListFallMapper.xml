@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.match.dao.TbMatchListFallDao">
+
+	<select id="get" resultType="com.bootdo.match.domain.TbMatchListFallDO">
+		select `match_list_guid`,`match_guid`,`mt_name`,`dosage`,`is_delete`,`mt_spec`,`supplier_name`,`water_rate`,`produce`,`remark` from tb_match_list_fall where match_list_guid = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.match.domain.TbMatchListFallDO">
+		select `match_list_guid`,`match_guid`,`mt_name`,`dosage`,`is_delete`,`mt_spec`,`supplier_name`,`water_rate`,`produce`,`remark` from tb_match_list_fall
+        <where>  
+		  		  <if test="matchListGuid != null and matchListGuid != ''"> and match_list_guid = #{matchListGuid} </if>
+		  		  <if test="matchGuid != null and matchGuid != ''"> and match_guid = #{matchGuid} </if>
+		  		  <if test="mtName != null and mtName != ''"> and mt_name = #{mtName} </if>
+		  		  <if test="dosage != null and dosage != ''"> and dosage = #{dosage} </if>
+		  		  <if test="isDelete != null and isDelete != ''"> and is_delete = #{isDelete} </if>
+		  		  <if test="mtSpec != null and mtSpec != ''"> and mt_spec = #{mtSpec} </if>
+		  		  <if test="supplierName != null and supplierName != ''"> and supplier_name = #{supplierName} </if>
+		  		  <if test="waterRate != null and waterRate != ''"> and water_rate = #{waterRate} </if>
+		  		  <if test="produce != null and produce != ''"> and produce = #{produce} </if>
+		  		  <if test="remark != null and remark != ''"> and remark = #{remark} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by match_list_guid desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from tb_match_list_fall
+		 <where>  
+		  		  <if test="matchListGuid != null and matchListGuid != ''"> and match_list_guid = #{matchListGuid} </if>
+		  		  <if test="matchGuid != null and matchGuid != ''"> and match_guid = #{matchGuid} </if>
+		  		  <if test="mtName != null and mtName != ''"> and mt_name = #{mtName} </if>
+		  		  <if test="dosage != null and dosage != ''"> and dosage = #{dosage} </if>
+		  		  <if test="isDelete != null and isDelete != ''"> and is_delete = #{isDelete} </if>
+		  		  <if test="mtSpec != null and mtSpec != ''"> and mt_spec = #{mtSpec} </if>
+		  		  <if test="supplierName != null and supplierName != ''"> and supplier_name = #{supplierName} </if>
+		  		  <if test="waterRate != null and waterRate != ''"> and water_rate = #{waterRate} </if>
+		  		  <if test="produce != null and produce != ''"> and produce = #{produce} </if>
+		  		  <if test="remark != null and remark != ''"> and remark = #{remark} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.match.domain.TbMatchListFallDO">
+		insert into tb_match_list_fall
+		(
+			`match_list_guid`, 
+			`match_guid`, 
+			`mt_name`, 
+			`dosage`, 
+			`is_delete`, 
+			`mt_spec`, 
+			`supplier_name`, 
+			`water_rate`, 
+			`produce`, 
+			`remark`
+		)
+		values
+		(
+			#{matchListGuid}, 
+			#{matchGuid}, 
+			#{mtName}, 
+			#{dosage}, 
+			#{isDelete}, 
+			#{mtSpec}, 
+			#{supplierName}, 
+			#{waterRate}, 
+			#{produce}, 
+			#{remark}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.match.domain.TbMatchListFallDO">
+		update tb_match_list_fall 
+		<set>
+			<if test="matchGuid != null">`match_guid` = #{matchGuid}, </if>
+			<if test="mtName != null">`mt_name` = #{mtName}, </if>
+			<if test="dosage != null">`dosage` = #{dosage}, </if>
+			<if test="isDelete != null">`is_delete` = #{isDelete}, </if>
+			<if test="mtSpec != null">`mt_spec` = #{mtSpec}, </if>
+			<if test="supplierName != null">`supplier_name` = #{supplierName}, </if>
+			<if test="waterRate != null">`water_rate` = #{waterRate}, </if>
+			<if test="produce != null">`produce` = #{produce}, </if>
+			<if test="remark != null">`remark` = #{remark}</if>
+		</set>
+		where match_list_guid = #{matchListGuid}
+	</update>
+	
+	<delete id="remove">
+		delete from tb_match_list_fall where match_list_guid = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from tb_match_list_fall where match_list_guid in 
+		<foreach item="matchListGuid" collection="array" open="(" separator="," close=")">
+			#{matchListGuid}
+		</foreach>
+	</delete>
+
+</mapper>

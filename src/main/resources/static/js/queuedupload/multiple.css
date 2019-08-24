@@ -1,0 +1,340 @@
+ *
+        {
+            margin: 0px;
+            padding: 0px;
+        }
+        body
+        {
+            line-height: 1;
+            color: black;
+            /*background: white;*/
+        }
+        
+        html, body
+        {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            font-family:微软雅黑;
+        }
+        
+        #content
+        {
+            margin-left: 5px;
+            margin-top: 0px;
+        }
+        
+        div.fieldset
+        {
+            border: 1px solid #afe14c;
+            margin: 10px 0;
+            padding: 20px 10px 10px 10px;
+			
+        }
+        div.fieldset span.legend
+        {
+            position: relative;
+            background-color: #FFF;
+            padding: 3px;
+			top: -30px; 
+            font-family:微软雅黑;
+            color: #73b304;
+        }
+        
+        div.flash
+        {
+            margin: 10px 5px 10px 0px;
+            border-color: #D9E4FF;
+			margin-top:20px;
+        }
+        
+        button, input, select, textarea
+        {
+            border-width: 1px;
+            margin-bottom: 10px;
+            padding: 2px 3px;
+        }
+
+        #fsUploadProgress .progressWrapper{
+			width:200px;
+			float:left;
+			padding-top:0px;
+			text-align:center;
+			margin:10px 5px;
+		}
+		 
+        #fsUploadProgress .progressContainer
+        {
+            margin: 0px;
+            padding: 0px;
+            border: solid 1px #E8E8E8;
+            background-color: #F7F7F7;
+            overflow: hidden;
+            height:150px;
+        }
+        
+        /* Message */
+        .message
+        {
+            margin: 1em 0;
+            padding: 10px 20px;
+            border: solid 1px #FFDD99;
+            background-color: #FFFFCC;
+            overflow: hidden;
+        }
+        
+        /* Error */
+        .red
+        {
+            border: solid 1px #B50000;
+            background-color: #FFEBEB;
+        }
+        
+        /* Current */
+        .green
+        {
+            border: solid 1px #F7F2D4;
+            background-color: #FFFAEC;
+        }
+        
+        /* Complete */
+        .blue
+        {
+            border: solid 1px #D0F3C2;
+            background-color: #E9FAE9;
+        }
+        #fsUploadProgress .progressImg
+        {
+            font-size: 8pt;
+            font-weight: 700;
+            color: #555;
+            width: 200px;
+            height: 150px;
+            white-space: nowrap;
+            overflow: hidden;
+			float:left;
+			position:relative;
+			top:-26px;
+            line-height: 150px;
+            text-align: center;
+        }
+		#fsUploadProgress .progressImg img{
+			max-width:200px;
+			max-height:150px;
+            vertical-align: middle;
+		}
+        #fsUploadProgress .progressPercent
+        {
+        	display:none;
+        }
+        #fsUploadProgress .progressName
+        {
+        	display:none;
+            font-size: 12pt;
+			line-height:16pt;
+            color: #555;
+            width: 200px;
+            height: 25px;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+			margin:0px;
+			position: relative;
+            bottom:43px;
+            background-color:grey;
+            color:#fff;
+        }
+        
+        #fsUploadProgress .progressBarInProgress, #fsUploadProgress .progressBarComplete,#fsUploadProgress  .progressBarError
+        {
+            font-size: 0;
+            width: 0%;
+            height: 3px;
+            background-color: #5BE918;
+            margin-top: -43px;
+        }
+        
+        #fsUploadProgress .progressBarComplete
+        {
+            width: 100%;
+            background-color: green;
+            /* visibility: hidden; */
+        }
+        
+       #fsUploadProgress .progressBarError
+        {
+            width: 100%;
+            background-color: red;
+            visibility: hidden;
+        }
+        
+       #fsUploadProgress .progressBarStatus
+        {
+        	display:none; /**暂时隐藏 **/
+            text-align: center;
+			width:200px;
+			padding:0 20px;
+			font-size:12px;
+        } 
+        
+       #fsUploadProgress a.progressCancel
+        {
+            font-size: 0;
+			display:block;
+            height: 18px;
+            width: 18px;
+            background-image: url(../../img/icon_close01.png);
+            background-repeat: no-repeat;
+			margin:4px;
+            position: relative;
+			z-index: 999;
+			float:right;
+        }
+
+        
+        .swfupload
+        {
+            vertical-align: middle;
+        }
+        
+        .btnword
+        {
+            background: url(../../js/queuedupload/sprite.png) no-repeat;
+            border: none;
+            width: 80px;
+            height: 25px;
+            background-position: -175px -50px;
+            color: #197FAE;
+            margin-top: 3px;
+            cursor: pointer;
+            
+        }
+        
+        #docUploadProgress .progressWrapper{
+			width:90%;
+			height:45px;
+			text-align:center;
+			margin:10px 5px;
+			background-color:#F2F2F2;
+		}
+		 
+        #docUploadProgress .progressContainer
+        {
+            margin: 0px;
+            padding: 0px;
+            border: solid 1px #E8E8E8;
+            background-color: #F7F7F7;
+            overflow: hidden;
+            height:45px;
+        }
+        #docUploadProgress .progressImg
+        {
+            width: 21px;
+            height: 24px;
+            text-align: left;
+            white-space: nowrap;
+            overflow: hidden;
+			float:left;
+			margin:10px 20px;
+			cursor: pointer;
+        }
+		#docUploadProgress .progressImg img{
+			width: 21px;
+            height: 24px;
+		}
+        #docUploadProgress .progressName
+        {
+        	float:left;
+            font-size: 14px;
+			line-height:45px;
+            color: #333;
+            width: 60%;
+            height: 45px;
+            text-align: left;
+            white-space: nowrap;
+            overflow: hidden;
+			margin:0px;
+			cursor: pointer;
+        }
+        #docUploadProgress .progressPercent
+        {
+        	width:5%;
+        	float:left;
+        	height:45px;
+        	line-height:45px;
+        	font-size:14px;
+        }
+        
+        #docUploadProgress .progressBarInProgress, #docUploadProgress .progressBarComplete,#docUploadProgress  .progressBarError
+        {
+            font-size: 0;
+            width: 5%;
+            height: 7px;
+            background-color: #E5E5E5;
+            border-radius:3px;
+			margin:20px;
+            float:left;
+        }
+        
+        #docUploadProgress .progressBarComplete
+        {
+            width: 37%;
+            height:7px;
+            border-radius:3px;
+            background-color: #0E264C;
+            float:left;
+            margin:20px;
+            /* visibility: hidden; */
+        }
+        
+       #docUploadProgress .progressBarError
+        {
+            width: 40%;
+            background-color: red;
+            visibility: hidden;
+        }
+        
+       #docUploadProgress .progressBarStatus
+        {
+        	
+            text-align: center;
+			width:20%;
+			height:45px;
+			line-height:45px;
+			font-size:14px;
+			float:left;
+        } 
+        
+       #docUploadProgress a.progressCancel
+        {
+            font-size: 0;
+			display:block;
+            height: 18px;
+            width: 18px;
+            background-image: url(../../img/icon_close01.png);
+            background-repeat: no-repeat;
+			margin:13px;
+            position: relative;
+			z-index: 999;
+			float:right;
+        }
+        
+                
+        a.progressCancel:hover
+        {
+        	background-image: url(../../img/icon_close02.png);
+
+        }
+        .download{background-image:url('../img/download.png');width:88px;height:22px;margin-top:5px;display:block;}
+		.download:hover{background-image:url('../img/download01.png');}
+ video::-internal-media-controls-download-button {
+     display:none;
+ }
+
+ video::-webkit-media-controls-enclosure {
+     overflow:hidden;
+ }
+
+ video::-webkit-media-controls-panel {
+     width: calc(100% + 30px);
+ }

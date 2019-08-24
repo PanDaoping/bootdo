@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.stock.dao.TbMtStockDao">
+
+	<select id="get" resultType="com.bootdo.stock.domain.TbMtStockDO">
+		select `mt_code`,`supplier_name`,`mt_spec`,`oper_user`,`mt_unit`,`is_delete`,`parent_mt_mode`,`mt_model`,`update_time`,`lately_out_price`,`stock_num`,`alarm_num`,`mt_brand`,`mt_name`,`supplier_guid`,`facturer`,`manuDate` from tb_mt_stock where mt_code = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.stock.domain.TbMtStockDO">
+		select `mt_code`,`supplier_name`,`mt_spec`,`oper_user`,`mt_unit`,`is_delete`,`parent_mt_mode`,`mt_model`,`update_time`,`lately_out_price`,`stock_num`,`alarm_num`,`mt_brand`,`mt_name`,`supplier_guid`,`facturer`,`manuDate` from tb_mt_stock
+        <where>  
+		  		  <if test="mtCode != null and mtCode != ''"> and mt_code = #{mtCode} </if>
+		  		  <if test="supplierName != null and supplierName != ''"> and supplier_name = #{supplierName} </if>
+		  		  <if test="mtSpec != null and mtSpec != ''"> and mt_spec = #{mtSpec} </if>
+		  		  <if test="operUser != null and operUser != ''"> and oper_user = #{operUser} </if>
+		  		  <if test="mtUnit != null and mtUnit != ''"> and mt_unit = #{mtUnit} </if>
+		  		  <if test="isDelete != null and isDelete != ''"> and is_delete = #{isDelete} </if>
+		  		  <if test="parentMtMode != null and parentMtMode != ''"> and parent_mt_mode = #{parentMtMode} </if>
+		  		  <if test="mtModel != null and mtModel != ''"> and mt_model = #{mtModel} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		  		  <if test="latelyOutPrice != null and latelyOutPrice != ''"> and lately_out_price = #{latelyOutPrice} </if>
+		  		  <if test="stockNum != null and stockNum != ''"> and stock_num = #{stockNum} </if>
+		  		  <if test="alarmNum != null and alarmNum != ''"> and alarm_num = #{alarmNum} </if>
+		  		  <if test="mtBrand != null and mtBrand != ''"> and mt_brand = #{mtBrand} </if>
+		  		  <if test="mtName != null and mtName != ''"> and mt_name = #{mtName} </if>
+		  		  <if test="supplierGuid != null and supplierGuid != ''"> and supplier_guid = #{supplierGuid} </if>
+		  		  <if test="facturer != null and facturer != ''"> and facturer = #{facturer} </if>
+		  		  <if test="manudate != null and manudate != ''"> and manuDate = #{manudate} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by mt_code desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from tb_mt_stock
+		 <where>  
+		  		  <if test="mtCode != null and mtCode != ''"> and mt_code = #{mtCode} </if>
+		  		  <if test="supplierName != null and supplierName != ''"> and supplier_name = #{supplierName} </if>
+		  		  <if test="mtSpec != null and mtSpec != ''"> and mt_spec = #{mtSpec} </if>
+		  		  <if test="operUser != null and operUser != ''"> and oper_user = #{operUser} </if>
+		  		  <if test="mtUnit != null and mtUnit != ''"> and mt_unit = #{mtUnit} </if>
+		  		  <if test="isDelete != null and isDelete != ''"> and is_delete = #{isDelete} </if>
+		  		  <if test="parentMtMode != null and parentMtMode != ''"> and parent_mt_mode = #{parentMtMode} </if>
+		  		  <if test="mtModel != null and mtModel != ''"> and mt_model = #{mtModel} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		  		  <if test="latelyOutPrice != null and latelyOutPrice != ''"> and lately_out_price = #{latelyOutPrice} </if>
+		  		  <if test="stockNum != null and stockNum != ''"> and stock_num = #{stockNum} </if>
+		  		  <if test="alarmNum != null and alarmNum != ''"> and alarm_num = #{alarmNum} </if>
+		  		  <if test="mtBrand != null and mtBrand != ''"> and mt_brand = #{mtBrand} </if>
+		  		  <if test="mtName != null and mtName != ''"> and mt_name = #{mtName} </if>
+		  		  <if test="supplierGuid != null and supplierGuid != ''"> and supplier_guid = #{supplierGuid} </if>
+		  		  <if test="facturer != null and facturer != ''"> and facturer = #{facturer} </if>
+		  		  <if test="manudate != null and manudate != ''"> and manuDate = #{manudate} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.stock.domain.TbMtStockDO">
+		insert into tb_mt_stock
+		(
+			`mt_code`, 
+			`supplier_name`, 
+			`mt_spec`, 
+			`oper_user`, 
+			`mt_unit`, 
+			`is_delete`, 
+			`parent_mt_mode`, 
+			`mt_model`, 
+			`update_time`, 
+			`lately_out_price`, 
+			`stock_num`, 
+			`alarm_num`, 
+			`mt_brand`, 
+			`mt_name`, 
+			`supplier_guid`, 
+			`facturer`, 
+			`manuDate`
+		)
+		values
+		(
+			#{mtCode}, 
+			#{supplierName}, 
+			#{mtSpec}, 
+			#{operUser}, 
+			#{mtUnit}, 
+			#{isDelete}, 
+			#{parentMtMode}, 
+			#{mtModel}, 
+			#{updateTime}, 
+			#{latelyOutPrice}, 
+			#{stockNum}, 
+			#{alarmNum}, 
+			#{mtBrand}, 
+			#{mtName}, 
+			#{supplierGuid}, 
+			#{facturer}, 
+			#{manudate}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.stock.domain.TbMtStockDO">
+		update tb_mt_stock 
+		<set>
+			<if test="supplierName != null">`supplier_name` = #{supplierName}, </if>
+			<if test="mtSpec != null">`mt_spec` = #{mtSpec}, </if>
+			<if test="operUser != null">`oper_user` = #{operUser}, </if>
+			<if test="mtUnit != null">`mt_unit` = #{mtUnit}, </if>
+			<if test="isDelete != null">`is_delete` = #{isDelete}, </if>
+			<if test="parentMtMode != null">`parent_mt_mode` = #{parentMtMode}, </if>
+			<if test="mtModel != null">`mt_model` = #{mtModel}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
+			<if test="latelyOutPrice != null">`lately_out_price` = #{latelyOutPrice}, </if>
+			<if test="stockNum != null">`stock_num` = #{stockNum}, </if>
+			<if test="alarmNum != null">`alarm_num` = #{alarmNum}, </if>
+			<if test="mtBrand != null">`mt_brand` = #{mtBrand}, </if>
+			<if test="mtName != null">`mt_name` = #{mtName}, </if>
+			<if test="supplierGuid != null">`supplier_guid` = #{supplierGuid}, </if>
+			<if test="facturer != null">`facturer` = #{facturer}, </if>
+			<if test="manudate != null">`manuDate` = #{manudate}</if>
+		</set>
+		where mt_code = #{mtCode}
+	</update>
+	
+	<delete id="remove">
+		delete from tb_mt_stock where mt_code = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from tb_mt_stock where mt_code in 
+		<foreach item="mtCode" collection="array" open="(" separator="," close=")">
+			#{mtCode}
+		</foreach>
+	</delete>
+
+</mapper>

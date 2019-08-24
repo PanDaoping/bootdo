@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.product.dao.TbPlanTaskDao">
+
+	<select id="get" resultType="com.bootdo.product.domain.TbPlanTaskDO">
+		select `plan_guid`,`contract_guid`,`construction_organiz`,`plan_date`,`plan_amount`,`mark_number`,`is_delete`,`pouring_way`,`concrete_slump`,`construction_part`,`concrete_strength_grade`,`status`,`remark` from tb_plan_task where plan_guid = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.product.domain.TbPlanTaskDO">
+		select `plan_guid`,`contract_guid`,`construction_organiz`,`plan_date`,`plan_amount`,`mark_number`,`is_delete`,`pouring_way`,`concrete_slump`,`construction_part`,`concrete_strength_grade`,`status`,`remark` from tb_plan_task
+        <where>  
+		  		  <if test="planGuid != null and planGuid != ''"> and plan_guid = #{planGuid} </if>
+		  		  <if test="contractGuid != null and contractGuid != ''"> and contract_guid = #{contractGuid} </if>
+		  		  <if test="constructionOrganiz != null and constructionOrganiz != ''"> and construction_organiz = #{constructionOrganiz} </if>
+		  		  <if test="planDate != null and planDate != ''"> and plan_date = #{planDate} </if>
+		  		  <if test="planAmount != null and planAmount != ''"> and plan_amount = #{planAmount} </if>
+		  		  <if test="markNumber != null and markNumber != ''"> and mark_number = #{markNumber} </if>
+		  		  <if test="isDelete != null and isDelete != ''"> and is_delete = #{isDelete} </if>
+		  		  <if test="pouringWay != null and pouringWay != ''"> and pouring_way = #{pouringWay} </if>
+		  		  <if test="concreteSlump != null and concreteSlump != ''"> and concrete_slump = #{concreteSlump} </if>
+		  		  <if test="constructionPart != null and constructionPart != ''"> and construction_part = #{constructionPart} </if>
+		  		  <if test="concreteStrengthGrade != null and concreteStrengthGrade != ''"> and concrete_strength_grade = #{concreteStrengthGrade} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by plan_guid desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from tb_plan_task
+		 <where>  
+		  		  <if test="planGuid != null and planGuid != ''"> and plan_guid = #{planGuid} </if>
+		  		  <if test="contractGuid != null and contractGuid != ''"> and contract_guid = #{contractGuid} </if>
+		  		  <if test="constructionOrganiz != null and constructionOrganiz != ''"> and construction_organiz = #{constructionOrganiz} </if>
+		  		  <if test="planDate != null and planDate != ''"> and plan_date = #{planDate} </if>
+		  		  <if test="planAmount != null and planAmount != ''"> and plan_amount = #{planAmount} </if>
+		  		  <if test="markNumber != null and markNumber != ''"> and mark_number = #{markNumber} </if>
+		  		  <if test="isDelete != null and isDelete != ''"> and is_delete = #{isDelete} </if>
+		  		  <if test="pouringWay != null and pouringWay != ''"> and pouring_way = #{pouringWay} </if>
+		  		  <if test="concreteSlump != null and concreteSlump != ''"> and concrete_slump = #{concreteSlump} </if>
+		  		  <if test="constructionPart != null and constructionPart != ''"> and construction_part = #{constructionPart} </if>
+		  		  <if test="concreteStrengthGrade != null and concreteStrengthGrade != ''"> and concrete_strength_grade = #{concreteStrengthGrade} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.product.domain.TbPlanTaskDO">
+		insert into tb_plan_task
+		(
+			`plan_guid`, 
+			`contract_guid`, 
+			`construction_organiz`, 
+			`plan_date`, 
+			`plan_amount`, 
+			`mark_number`, 
+			`is_delete`, 
+			`pouring_way`, 
+			`concrete_slump`, 
+			`construction_part`, 
+			`concrete_strength_grade`, 
+			`status`,
+			`user_id`,
+			`remark`
+		)
+		values
+		(
+			#{planGuid}, 
+			#{contractGuid}, 
+			#{constructionOrganiz}, 
+			#{planDate}, 
+			#{planAmount}, 
+			#{markNumber}, 
+			#{isDelete}, 
+			#{pouringWay}, 
+			#{concreteSlump}, 
+			#{constructionPart}, 
+			#{concreteStrengthGrade}, 
+			#{status},
+			#{userId},
+			#{remark}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.product.domain.TbPlanTaskDO">
+		update tb_plan_task 
+		<set>
+			<if test="contractGuid != null">`contract_guid` = #{contractGuid}, </if>
+			<if test="constructionOrganiz != null">`construction_organiz` = #{constructionOrganiz}, </if>
+			<if test="planDate != null">`plan_date` = #{planDate}, </if>
+			<if test="planAmount != null">`plan_amount` = #{planAmount}, </if>
+			<if test="markNumber != null">`mark_number` = #{markNumber}, </if>
+			<if test="isDelete != null">`is_delete` = #{isDelete}, </if>
+			<if test="pouringWay != null">`pouring_way` = #{pouringWay}, </if>
+			<if test="concreteSlump != null">`concrete_slump` = #{concreteSlump}, </if>
+			<if test="constructionPart != null">`construction_part` = #{constructionPart}, </if>
+			<if test="concreteStrengthGrade != null">`concrete_strength_grade` = #{concreteStrengthGrade}, </if>
+			<if test="status != null">`status` = #{status}</if>
+			<if test="userId != null">`user_id` = #{userId}</if>
+		</set>
+		where plan_guid = #{planGuid}
+	</update>
+	
+	<delete id="remove">
+		delete from tb_plan_task where plan_guid = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from tb_plan_task where plan_guid in 
+		<foreach item="planGuid" collection="array" open="(" separator="," close=")">
+			#{planGuid}
+		</foreach>
+	</delete>
+
+	<select id="findAll" resultType="com.bootdo.product.domain.TbPlanTaskDO">
+		select `plan_guid`,`contract_guid`,`construction_organiz`,`plan_date`,`plan_amount`,`mark_number`,`is_delete`,`pouring_way`,`concrete_slump`,`construction_part`,`concrete_strength_grade`,`status`,`remark` from tb_plan_task
+		WHERE is_delete = 0
+			<if test="planGuid != null and planGuid != ''"> and plan_guid = #{planGuid} </if>
+			<if test="contractGuid != null and contractGuid != ''"> and contract_guid = #{contractGuid} </if>
+			<if test="constructionOrganiz != null and constructionOrganiz != ''"> and construction_organiz = #{constructionOrganiz} </if>
+			<if test="planDate != null and planDate != ''"> and plan_date = #{planDate} </if>
+			<if test="planAmount != null and planAmount != ''"> and plan_amount = #{planAmount} </if>
+			<if test="markNumber != null and markNumber != ''"> and mark_number = #{markNumber} </if>
+			<if test="isDelete != null and isDelete != ''"> and is_delete = #{isDelete} </if>
+			<if test="pouringWay != null and pouringWay != ''"> and pouring_way = #{pouringWay} </if>
+			<if test="concreteSlump != null and concreteSlump != ''"> and concrete_slump = #{concreteSlump} </if>
+			<if test="constructionPart != null and constructionPart != ''"> and construction_part = #{constructionPart} </if>
+			<if test="concreteStrengthGrade != null and concreteStrengthGrade != ''"> and concrete_strength_grade = #{concreteStrengthGrade} </if>
+			<if test="status != null and status != ''"> and status = #{status} </if>
+	</select>
+
+</mapper>

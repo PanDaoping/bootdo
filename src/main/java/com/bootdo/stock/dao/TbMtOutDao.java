@@ -1,0 +1,32 @@
+package com.bootdo.stock.dao;
+
+import com.bootdo.stock.domain.TbMtOutDO;
+
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Mapper;
+
+/**
+ * 资产（材料）领用登记表
+ * @author chglee
+ * @email 1992lcg@163.com
+ * @date 2019-04-12 14:20:07
+ */
+@Mapper
+public interface TbMtOutDao {
+
+	TbMtOutDO get(String outGuid);
+	
+	List<TbMtOutDO> list(Map<String,Object> map);
+	
+	int count(Map<String,Object> map);
+	
+	int save(TbMtOutDO tbMtOut);
+	
+	int update(TbMtOutDO tbMtOut);
+	
+	int remove(String out_guid);
+	
+	int batchRemove(String[] outGuids);
+}

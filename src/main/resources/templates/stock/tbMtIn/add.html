@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header">
+	<style>
+		.bootstrap-select.form-control:not([class*="span"]){
+			width:55%
+		}
+		.dropdown-menu>.active>a, .dropdown-menu>.active>a:focus, .dropdown-menu>.active>a:hover{
+			background:#49617F;
+		}
+		.form-horizontal .radio-inline{
+			line-height: 22px;
+			font-size: 15px;
+		}
+		.reportEqGuid button{
+			cursor: not-allowed;
+			background: #eee!important;
+			outline: none !important;
+			box-shadow: none !important;
+		}
+		.reportEqGuid .dropdown-menu{
+			display: none;
+		}
+		.reportEqGuid .bootstrap-select .btn:focus{
+			outline: none !important;
+		}
+	</style>
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content ">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="ibox float-e-margins">
+				<div class="ibox-content">
+					<form class="form-horizontal m-t" id="signupForm">
+						<div  class="sec_editDiv">
+							<div class="left_sec">
+								<label  for="" class=" control-label left_label">采购订单号：</label>
+								<input type="text" class="form-control must input_text" readonly name="orderNum" th:value="${orderNo}">
+							</div>
+							<div class="right_sec">
+								<label for="" class=" control-label right_label">车牌号：</label>
+								<input type="hidden" class="plateNumber"/>
+								<select  class="form-control must input_text" id="plateNumber" name="plateNumber"  data-live-search="true" />
+								</select>
+								<label id="eqGuid-error" class="error" for="plateNumber" style="display:none;margin-left: 30%;    margin-top: 5px;"><i class="fa fa-times-circle"></i> 请选择车牌号</label>
+							</div>
+							<div style="clear:both"></div>
+						</div>
+
+						<div  class="sec_editDiv">
+							<div class="left_sec">
+								<label  for="" class=" control-label left_label">货物名称：</label>
+								<input type="text" id="mtName" name="mtName"class="form-control must input_text" >
+							</div>
+							<div class="right_sec">
+								<label class="control-label right_label">毛重：</label>
+								<input id="roughWeight" name="roughWeight" class="form-control must input_text" type="text">
+							</div><div style="clear:both"></div>
+
+						</div>
+
+						<div  class="sec_editDiv">
+							<div class="left_sec">
+								<label class="control-label left_label">皮重：</label>
+								<input id="tareWeight" name="tareWeight" class="form-control must input_text" type="text">
+
+							</div>
+							<div class="right_sec">
+								<label class="control-label right_label">净重：</label>
+								<input id="netWeight" name="netWeight" class="form-control must input_text" type="text">
+							</div><div style="clear:both"></div>
+
+						</div>
+						<div  class="sec_editDiv">
+							<div class="left_sec">
+								<label class="control-label left_label">扣杂：</label>
+								<input id="deductMix" name="deductMix" class="form-control must input_text" type="text">
+
+							</div>
+							<div class="right_sec">
+								<label class="control-label right_label">单价：</label>
+								<input id="unitPrice" name="unitPrice" class="form-control must input_text" type="text">
+							</div><div style="clear:both"></div>
+
+						</div>
+						<!--<div  class="sec_editDiv">-->
+							<!--<div class="left_sec">-->
+								<!--<label class="control-label left_label">总金额：</label>-->
+								<!--<input id="sum" name="sum" class="form-control must input_text" type="text">-->
+							<!--</div>-->
+							<!--<div style="clear:both"></div>-->
+
+						<!--</div>-->
+
+						<div class="form-group">
+							<div class="col-sm-8 col-sm-offset-3">
+								<button type="submit" class="btn btn-primary">提交</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div th:include="include::footer"></div>
+<script type="text/javascript" src="/js/appjs/stock/tbMtIn/add.js">
+</script>
+</body>
+</html>

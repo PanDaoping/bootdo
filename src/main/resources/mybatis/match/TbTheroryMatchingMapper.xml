@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.match.dao.TbTheroryMatchingDao">
+
+	<select id="get" resultType="com.bootdo.match.domain.TbTheroryMatchingDO">
+		select `theory_guid`,`strength_grade`,`match_num`,`is_delete` from tb_therory_matching where theory_guid = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.match.domain.TbTheroryMatchingDO">
+		select `theory_guid`,`strength_grade`,`match_num`,`is_delete` from tb_therory_matching
+        <where>  
+		  		  <if test="theoryGuid != null and theoryGuid != ''"> and theory_guid = #{theoryGuid} </if>
+		  		  <if test="strengthGrade != null and strengthGrade != ''"> and strength_grade = #{strengthGrade} </if>
+		  		  <if test="matchNum != null and matchNum != ''"> and match_num = #{matchNum} </if>
+		  		  <if test="isDelete != null and isDelete != ''"> and is_delete = #{isDelete} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by theory_guid desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from tb_therory_matching
+		 <where>  
+		  		  <if test="theoryGuid != null and theoryGuid != ''"> and theory_guid = #{theoryGuid} </if>
+		  		  <if test="strengthGrade != null and strengthGrade != ''"> and strength_grade = #{strengthGrade} </if>
+		  		  <if test="matchNum != null and matchNum != ''"> and match_num = #{matchNum} </if>
+		  		  <if test="isDelete != null and isDelete != ''"> and is_delete = #{isDelete} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.match.domain.TbTheroryMatchingDO">
+		insert into tb_therory_matching
+		(
+			`theory_guid`, 
+			`strength_grade`, 
+			`match_num`, 
+			`is_delete`
+		)
+		values
+		(
+			#{theoryGuid}, 
+			#{strengthGrade}, 
+			#{matchNum}, 
+			#{isDelete}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.match.domain.TbTheroryMatchingDO">
+		update tb_therory_matching 
+		<set>
+			<if test="strengthGrade != null">`strength_grade` = #{strengthGrade}, </if>
+			<if test="matchNum != null">`match_num` = #{matchNum}, </if>
+			<if test="isDelete != null">`is_delete` = #{isDelete}</if>
+		</set>
+		where theory_guid = #{theoryGuid}
+	</update>
+	
+	<delete id="remove">
+		delete from tb_therory_matching where theory_guid = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from tb_therory_matching where theory_guid in 
+		<foreach item="theoryGuid" collection="array" open="(" separator="," close=")">
+			#{theoryGuid}
+		</foreach>
+	</delete>
+
+</mapper>

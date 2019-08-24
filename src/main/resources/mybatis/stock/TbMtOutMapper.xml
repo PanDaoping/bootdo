@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.stock.dao.TbMtOutDao">
+
+	<select id="get" resultType="com.bootdo.stock.domain.TbMtOutDO">
+		select `out_guid`,`out_type`,`is_delete`,`reg_user_id`,`check_state`,`out_desc`,`out_user_id`,`user_name`,`out_time`,`amount`,`use_purpose`,`relation_guid`,`outCode` from tb_mt_out where out_guid = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.stock.domain.TbMtOutDO">
+		select `out_guid`,`out_type`,`is_delete`,`reg_user_id`,`check_state`,`out_desc`,`out_user_id`,`user_name`,`out_time`,`amount`,`use_purpose`,`relation_guid`,`outCode` from tb_mt_out
+        <where>  
+		  		  <if test="outGuid != null and outGuid != ''"> and out_guid = #{outGuid} </if>
+		  		  <if test="outType != null and outType != ''"> and out_type = #{outType} </if>
+		  		  <if test="isDelete != null and isDelete != ''"> and is_delete = #{isDelete} </if>
+		  		  <if test="regUserId != null and regUserId != ''"> and reg_user_id = #{regUserId} </if>
+		  		  <if test="checkState != null and checkState != ''"> and check_state = #{checkState} </if>
+		  		  <if test="outDesc != null and outDesc != ''"> and out_desc = #{outDesc} </if>
+		  		  <if test="outUserId != null and outUserId != ''"> and out_user_id = #{outUserId} </if>
+		  		  <if test="userName != null and userName != ''"> and user_name = #{userName} </if>
+		  		  <if test="outTime != null and outTime != ''"> and out_time = #{outTime} </if>
+		  		  <if test="amount != null and amount != ''"> and amount = #{amount} </if>
+		  		  <if test="usePurpose != null and usePurpose != ''"> and use_purpose = #{usePurpose} </if>
+		  		  <if test="relationGuid != null and relationGuid != ''"> and relation_guid = #{relationGuid} </if>
+		  		  <if test="outcode != null and outcode != ''"> and outCode = #{outcode} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by out_guid desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from tb_mt_out
+		 <where>  
+		  		  <if test="outGuid != null and outGuid != ''"> and out_guid = #{outGuid} </if>
+		  		  <if test="outType != null and outType != ''"> and out_type = #{outType} </if>
+		  		  <if test="isDelete != null and isDelete != ''"> and is_delete = #{isDelete} </if>
+		  		  <if test="regUserId != null and regUserId != ''"> and reg_user_id = #{regUserId} </if>
+		  		  <if test="checkState != null and checkState != ''"> and check_state = #{checkState} </if>
+		  		  <if test="outDesc != null and outDesc != ''"> and out_desc = #{outDesc} </if>
+		  		  <if test="outUserId != null and outUserId != ''"> and out_user_id = #{outUserId} </if>
+		  		  <if test="userName != null and userName != ''"> and user_name = #{userName} </if>
+		  		  <if test="outTime != null and outTime != ''"> and out_time = #{outTime} </if>
+		  		  <if test="amount != null and amount != ''"> and amount = #{amount} </if>
+		  		  <if test="usePurpose != null and usePurpose != ''"> and use_purpose = #{usePurpose} </if>
+		  		  <if test="relationGuid != null and relationGuid != ''"> and relation_guid = #{relationGuid} </if>
+		  		  <if test="outcode != null and outcode != ''"> and outCode = #{outcode} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.stock.domain.TbMtOutDO">
+		insert into tb_mt_out
+		(
+			`out_guid`, 
+			`out_type`, 
+			`is_delete`, 
+			`reg_user_id`, 
+			`check_state`, 
+			`out_desc`, 
+			`out_user_id`, 
+			`user_name`, 
+			`out_time`, 
+			`amount`, 
+			`use_purpose`, 
+			`relation_guid`, 
+			`outCode`
+		)
+		values
+		(
+			#{outGuid}, 
+			#{outType}, 
+			#{isDelete}, 
+			#{regUserId}, 
+			#{checkState}, 
+			#{outDesc}, 
+			#{outUserId}, 
+			#{userName}, 
+			#{outTime}, 
+			#{amount}, 
+			#{usePurpose}, 
+			#{relationGuid}, 
+			#{outcode}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.stock.domain.TbMtOutDO">
+		update tb_mt_out 
+		<set>
+			<if test="outType != null">`out_type` = #{outType}, </if>
+			<if test="isDelete != null">`is_delete` = #{isDelete}, </if>
+			<if test="regUserId != null">`reg_user_id` = #{regUserId}, </if>
+			<if test="checkState != null">`check_state` = #{checkState}, </if>
+			<if test="outDesc != null">`out_desc` = #{outDesc}, </if>
+			<if test="outUserId != null">`out_user_id` = #{outUserId}, </if>
+			<if test="userName != null">`user_name` = #{userName}, </if>
+			<if test="outTime != null">`out_time` = #{outTime}, </if>
+			<if test="amount != null">`amount` = #{amount}, </if>
+			<if test="usePurpose != null">`use_purpose` = #{usePurpose}, </if>
+			<if test="relationGuid != null">`relation_guid` = #{relationGuid}, </if>
+			<if test="outcode != null">`outCode` = #{outcode}</if>
+		</set>
+		where out_guid = #{outGuid}
+	</update>
+	
+	<delete id="remove">
+		delete from tb_mt_out where out_guid = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from tb_mt_out where out_guid in 
+		<foreach item="outGuid" collection="array" open="(" separator="," close=")">
+			#{outGuid}
+		</foreach>
+	</delete>
+
+</mapper>

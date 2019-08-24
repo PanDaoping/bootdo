@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header">
+	<style>
+		.bootstrap-select.form-control:not([class*="span"]){
+			width:55%
+		}
+		.dropdown-menu>.active>a, .dropdown-menu>.active>a:focus, .dropdown-menu>.active>a:hover{
+			background:#49617F;
+		}
+		.form-horizontal .radio-inline{
+			line-height: 22px;
+			font-size: 15px;
+		}
+		.reportEqGuid button{
+			cursor: not-allowed;
+			background: #eee!important;
+			outline: none !important;
+			box-shadow: none !important;
+		}
+		.reportEqGuid .dropdown-menu{
+			display: none;
+		}
+		.reportEqGuid .bootstrap-select .btn:focus{
+			outline: none !important;
+		}
+	</style>
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content ">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="ibox float-e-margins">
+				<div class="ibox-content">
+					<form class="form-horizontal m-t" id="signupForm">
+						<input id="clientGuid" name="clientGuid" th:value="${tbSellClient.clientGuid}"  type="hidden">
+						<div  class="sec_editDiv">
+							<div class="left_sec">
+								<label  for="" class=" control-label left_label">客户编号：</label>
+								<input type="text" class="form-control must input_text" readonly  id="clientCode" name="clientCode" th:value="${tbSellClient.clientCode}">
+							</div>
+							<div class="right_sec">
+								<label for="" class=" control-label right_label">客户名称：</label>
+								<input type="text" class="form-control must input_text" id="clientName" name="clientName" th:value="${tbSellClient.clientName}"/>
+							</div>
+							<div style="clear:both"></div>
+						</div>
+
+						<div  class="sec_editDiv">
+							<div class="left_sec">
+								<label  for="" class=" control-label left_label">公司名称：</label>
+								<input type="text" id="companyName" name="companyName"class="form-control must input_text"  th:value="${tbSellClient.companyName}">
+							</div>
+							<div class="right_sec">
+								<label class="control-label right_label">公司电话：</label>
+								<input id="companyTel" name="companyTel" class="form-control must input_text" type="text" th:value="${tbSellClient.companyTel}">
+							</div><div style="clear:both"></div>
+
+						</div>
+
+						<div  class="sec_editDiv">
+							<div class="left_sec">
+								<label class="control-label left_label">联系电话（手机）：</label>
+								<input id="linkMtel" name="linkMtel" class="form-control must input_text" type="text" th:value="${tbSellClient.linkMtel}">
+
+							</div>
+							<div class="right_sec">
+								<label class="control-label right_label">联系电话（固定）：</label>
+								<input id="linktel" name="linktel" class="form-control must input_text" type="text" th:value="${tbSellClient.linktel}">
+							</div><div style="clear:both"></div>
+
+						</div>
+						<div  class="sec_editDiv">
+							<div class="left_sec">
+								<label class="control-label left_label">详细地址：</label>
+								<input id="address" name="address" class="form-control must input_text" type="text" th:value="${tbSellClient.address}">
+
+							</div>
+							<div class="right_sec">
+								<label class="control-label right_label">状态：</label>
+								<input id="state" name="state" class="form-control must input_text" type="text" th:value="${tbSellClient.state}">
+							</div><div style="clear:both"></div>
+
+						</div>
+
+						<div class="form-group">
+							<div class="col-sm-8 col-sm-offset-3">
+								<button type="submit" class="btn btn-primary">提交</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div th:include="include::footer"></div>
+<script type="text/javascript" src="/js/appjs/sales/tbSellClient/edit.js">
+</script>
+</body>
+</html>
+

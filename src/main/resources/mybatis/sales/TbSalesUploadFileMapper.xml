@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.sales.dao.TbSalesUploadFileDao">
+
+	<select id="get" resultType="com.bootdo.sales.domain.TbSalesUploadFileDO">
+		select `upload_guid`,`file_name`,`file_type`,`relation_guid`,`file_path`,`user_id`,`is_delete`,`upload_time` from tb_sales_upload_file where upload_guid = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.sales.domain.TbSalesUploadFileDO">
+		select `upload_guid`,`file_name`,`file_type`,`relation_guid`,`file_path`,`user_id`,`is_delete`,`upload_time` from tb_sales_upload_file
+        <where>  
+		  		  <if test="uploadGuid != null and uploadGuid != ''"> and upload_guid = #{uploadGuid} </if>
+		  		  <if test="fileName != null and fileName != ''"> and file_name = #{fileName} </if>
+		  		  <if test="fileType != null and fileType != ''"> and file_type = #{fileType} </if>
+		  		  <if test="relationGuid != null and relationGuid != ''"> and relation_guid = #{relationGuid} </if>
+		  		  <if test="filePath != null and filePath != ''"> and file_path = #{filePath} </if>
+		  		  <if test="userId != null and userId != ''"> and user_id = #{userId} </if>
+		  		  <if test="isDelete != null and isDelete != ''"> and is_delete = #{isDelete} </if>
+		  		  <if test="uploadTime != null and uploadTime != ''"> and upload_time = #{uploadTime} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by upload_guid desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from tb_sales_upload_file
+		 <where>  
+		  		  <if test="uploadGuid != null and uploadGuid != ''"> and upload_guid = #{uploadGuid} </if>
+		  		  <if test="fileName != null and fileName != ''"> and file_name = #{fileName} </if>
+		  		  <if test="fileType != null and fileType != ''"> and file_type = #{fileType} </if>
+		  		  <if test="relationGuid != null and relationGuid != ''"> and relation_guid = #{relationGuid} </if>
+		  		  <if test="filePath != null and filePath != ''"> and file_path = #{filePath} </if>
+		  		  <if test="userId != null and userId != ''"> and user_id = #{userId} </if>
+		  		  <if test="isDelete != null and isDelete != ''"> and is_delete = #{isDelete} </if>
+		  		  <if test="uploadTime != null and uploadTime != ''"> and upload_time = #{uploadTime} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.sales.domain.TbSalesUploadFileDO">
+		insert into tb_sales_upload_file
+		(
+			`upload_guid`, 
+			`file_name`, 
+			`file_type`, 
+			`relation_guid`, 
+			`file_path`, 
+			`user_id`, 
+			`is_delete`, 
+			`upload_time`
+		)
+		values
+		(
+			#{uploadGuid}, 
+			#{fileName}, 
+			#{fileType}, 
+			#{relationGuid}, 
+			#{filePath}, 
+			#{userId}, 
+			#{isDelete}, 
+			#{uploadTime}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.sales.domain.TbSalesUploadFileDO">
+		update tb_sales_upload_file 
+		<set>
+			<if test="fileName != null">`file_name` = #{fileName}, </if>
+			<if test="fileType != null">`file_type` = #{fileType}, </if>
+			<if test="relationGuid != null">`relation_guid` = #{relationGuid}, </if>
+			<if test="filePath != null">`file_path` = #{filePath}, </if>
+			<if test="userId != null">`user_id` = #{userId}, </if>
+			<if test="isDelete != null">`is_delete` = #{isDelete}, </if>
+			<if test="uploadTime != null">`upload_time` = #{uploadTime}</if>
+		</set>
+		where upload_guid = #{uploadGuid}
+	</update>
+	
+	<delete id="remove">
+		delete from tb_sales_upload_file where upload_guid = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from tb_sales_upload_file where upload_guid in 
+		<foreach item="uploadGuid" collection="array" open="(" separator="," close=")">
+			#{uploadGuid}
+		</foreach>
+	</delete>
+
+	<update id="removeByRelation" parameterType="String">
+		UPDATE  tb_sales_upload_file SET is_delete = 1 WHERE relation_guid =  #{contractGuid}
+	</update>
+
+</mapper>

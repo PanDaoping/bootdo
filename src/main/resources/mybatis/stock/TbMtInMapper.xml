@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.stock.dao.TbMtInDao">
+
+	<select id="get" resultType="java.util.HashMap">
+		select mi.order_guid,mi.order_num,mi.oper_date,mi.oper_user,id.mt_code,id.mt_name,id.net_weight,id.plate_number,
+		id.rough_weight,id.tare_weight,id.deduct_mix ,id.order_detail_guid from tb_mt_in  mi  LEFT JOIN tb_mt_in_detail  id on
+		mi.order_guid=id.order_guid where mi.order_guid = #{value}
+	</select>
+
+	<select id="list" parameterType="java.util.HashMap"  resultType="java.util.HashMap">
+		select   mi.order_guid,mi.order_num,mi.oper_date,mi.oper_user,id.mt_code,id.mt_name,id.net_weight,id.plate_number,id.rough_weight,id.tare_weight from tb_mt_in  mi  LEFT JOIN tb_mt_in_detail  id on
+		mi.order_guid=id.order_guid
+        <where>  
+		  		  <if test="orderGuid != null and orderGuid != ''"> and mi.order_guid = #{orderGuid} </if>
+		  		  <if test="orderNum != null and orderNum != ''"> and mi.order_num = #{orderNum} </if>
+		  		  <if test="operDate != null and operDate != ''"> and mi.oper_date = #{operDate} </if>
+		  		  <if test="operUser != null and operUser != ''"> and mi.oper_user = #{operUser} </if>
+		  		  <if test="isDelete != null and isDelete != ''"> and is_delete = #{isDelete} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by mi.order_guid desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from tb_mt_in
+		 <where>  
+		  		  <if test="orderGuid != null and orderGuid != ''"> and order_guid = #{orderGuid} </if>
+		  		  <if test="orderNum != null and orderNum != ''"> and order_num = #{orderNum} </if>
+		  		  <if test="operDate != null and operDate != ''"> and oper_date = #{operDate} </if>
+		  		  <if test="operUser != null and operUser != ''"> and oper_user = #{operUser} </if>
+		  		  <if test="isDelete != null and isDelete != ''"> and is_delete = #{isDelete} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.stock.domain.TbMtInDO" useGeneratedKeys="true" keyProperty="orderGuid">
+		insert into tb_mt_in
+		(  `order_guid`,
+			`order_num`, 
+			`oper_date`, 
+			`oper_user`, 
+			`is_delete`
+		)
+		values
+		(
+           #{orderGuid},
+			#{orderNum}, 
+			#{operDate}, 
+			#{operUser}, 
+			#{isDelete}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.stock.domain.TbMtInDO">
+		update tb_mt_in 
+		<set>
+			<if test="orderNum != null">`order_num` = #{orderNum}, </if>
+			<if test="operDate != null">`oper_date` = #{operDate}, </if>
+			<if test="operUser != null">`oper_user` = #{operUser}, </if>
+			<if test="isDelete != null">`is_delete` = #{isDelete}</if>
+		</set>
+		where order_guid = #{orderGuid}
+	</update>
+	
+	<delete id="remove">
+		delete from tb_mt_in where order_guid = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from tb_mt_in where order_guid in 
+		<foreach item="orderGuid" collection="array" open="(" separator="," close=")">
+			#{orderGuid}
+		</foreach>
+	</delete>
+
+	<parameterMap type="java.util.Map" id="new_code_param">
+		<parameter property="type" mode="IN" jdbcType="INTEGER" />
+		<parameter property="newOrderNo" mode="OUT" jdbcType="VARCHAR" />
+	</parameterMap>
+	<select id="getNewCode" statementType="CALLABLE" parameterMap="new_code_param" resultType="java.lang.String" >
+  {CALL P_GET_NEW_CODE(?,?)}
+   </select>
+<select id="findAll">
+	select mi.order_num,mi.oper_date,mi.oper_user,id.mt_code,id.mt_name,id.net_weight,id.plate_number,id.rough_weight,id.tare_weight from tb_mt_in  mi  LEFT JOIN tb_mt_in_detail  id on
+mi.order_guid=id.order_guid
+</select>
+
+
+</mapper>

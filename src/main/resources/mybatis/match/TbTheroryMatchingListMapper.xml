@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.match.dao.TbTheroryMatchingListDao">
+
+	<select id="get" resultType="com.bootdo.match.domain.TbTheroryMatchingListDO">
+		select `therory_list_guid`,`theory_guid`,`mt_name`,`dosage`,`is_delete`,`mt_spec`,`supplier_name`,`water_rate`,`produce`,`remark` from tb_therory_matching_list where therory_list_guid = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.match.domain.TbTheroryMatchingListDO">
+		select `therory_list_guid`,`theory_guid`,`mt_name`,`dosage`,`is_delete`,`mt_spec`,`supplier_name`,`water_rate`,`produce`,`remark` from tb_therory_matching_list
+        <where>  
+		  		  <if test="theroryListGuid != null and theroryListGuid != ''"> and therory_list_guid = #{theroryListGuid} </if>
+		  		  <if test="theoryGuid != null and theoryGuid != ''"> and theory_guid = #{theoryGuid} </if>
+		  		  <if test="mtName != null and mtName != ''"> and mt_name = #{mtName} </if>
+		  		  <if test="dosage != null and dosage != ''"> and dosage = #{dosage} </if>
+		  		  <if test="isDelete != null and isDelete != ''"> and is_delete = #{isDelete} </if>
+		  		  <if test="mtSpec != null and mtSpec != ''"> and mt_spec = #{mtSpec} </if>
+		  		  <if test="supplierName != null and supplierName != ''"> and supplier_name = #{supplierName} </if>
+		  		  <if test="waterRate != null and waterRate != ''"> and water_rate = #{waterRate} </if>
+		  		  <if test="produce != null and produce != ''"> and produce = #{produce} </if>
+		  		  <if test="remark != null and remark != ''"> and remark = #{remark} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by therory_list_guid desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from tb_therory_matching_list
+		 <where>  
+		  		  <if test="theroryListGuid != null and theroryListGuid != ''"> and therory_list_guid = #{theroryListGuid} </if>
+		  		  <if test="theoryGuid != null and theoryGuid != ''"> and theory_guid = #{theoryGuid} </if>
+		  		  <if test="mtName != null and mtName != ''"> and mt_name = #{mtName} </if>
+		  		  <if test="dosage != null and dosage != ''"> and dosage = #{dosage} </if>
+		  		  <if test="isDelete != null and isDelete != ''"> and is_delete = #{isDelete} </if>
+		  		  <if test="mtSpec != null and mtSpec != ''"> and mt_spec = #{mtSpec} </if>
+		  		  <if test="supplierName != null and supplierName != ''"> and supplier_name = #{supplierName} </if>
+		  		  <if test="waterRate != null and waterRate != ''"> and water_rate = #{waterRate} </if>
+		  		  <if test="produce != null and produce != ''"> and produce = #{produce} </if>
+		  		  <if test="remark != null and remark != ''"> and remark = #{remark} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.match.domain.TbTheroryMatchingListDO">
+		insert into tb_therory_matching_list
+		(
+			`therory_list_guid`, 
+			`theory_guid`, 
+			`mt_name`, 
+			`dosage`, 
+			`is_delete`, 
+			`mt_spec`,
+			`supplier_name`,
+			`water_rate`,
+			`produce`, 
+			`remark`
+		)
+		values
+		(
+			#{theroryListGuid}, 
+			#{theoryGuid}, 
+			#{mtName}, 
+			#{dosage}, 
+			#{isDelete}, 
+			#{mtSpec},
+			#{supplierName},
+			#{waterRate},
+			#{produce}, 
+			#{remark}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.match.domain.TbTheroryMatchingListDO">
+		update tb_therory_matching_list 
+		<set>
+			<if test="theoryGuid != null">`theory_guid` = #{theoryGuid}, </if>
+			<if test="mtName != null">`mt_name` = #{mtName}, </if>
+			<if test="dosage != null">`dosage` = #{dosage}, </if>
+			<if test="isDelete != null">`is_delete` = #{isDelete}, </if>
+			<if test="mtSpec != null">`mt_spec` = #{mtSpec}, </if>
+			<if test="supplierName != null">`supplier_name` = #{supplierName}, </if>
+			<if test="waterRate != null">`water_rate` = #{waterRate}, </if>
+			<if test="produce != null">`produce` = #{produce}, </if>
+			<if test="remark != null">`remark` = #{remark}</if>
+		</set>
+		where therory_list_guid = #{theroryListGuid}
+	</update>
+	
+	<delete id="remove">
+		delete from tb_therory_matching_list where theory_guid = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from tb_therory_matching_list where therory_list_guid in 
+		<foreach item="theroryListGuid" collection="array" open="(" separator="," close=")">
+			#{theroryListGuid}
+		</foreach>
+	</delete>
+
+</mapper>

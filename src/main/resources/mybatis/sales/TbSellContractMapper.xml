@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.sales.dao.TbSellContractDao">
+
+	<select id="get" resultType="com.bootdo.sales.domain.TbSellContractDO">
+		select `contract_guid`,`contract_code`,`client_guid`,`contract_name`,`signed_amount`,`is_delete`,`construction_organiz`,`project_name`,`project_site`,`concrete_plan_amount`,`oncrete_actual_amount`,`contract_start_date`,`contract__over_date`,`account_limit`,`status` from tb_sell_contract where contract_guid = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.sales.domain.TbSellContractDO">
+		select `contract_guid`,`contract_code`,`client_guid`,`contract_name`,`signed_amount`,`is_delete`,`construction_organiz`,`project_name`,`project_site`,`concrete_plan_amount`,`oncrete_actual_amount`,`contract_start_date`,`contract__over_date`,`account_limit`,`status` from tb_sell_contract
+        <where>  
+		  		  <if test="contractGuid != null and contractGuid != ''"> and contract_guid = #{contractGuid} </if>
+		  		  <if test="contractCode != null and contractCode != ''"> and contract_code = #{contractCode} </if>
+		  		  <if test="clientGuid != null and clientGuid != ''"> and client_guid = #{clientGuid} </if>
+		  		  <if test="contractName != null and contractName != ''"> and contract_name = #{contractName} </if>
+		  		  <if test="signedAmount != null and signedAmount != ''"> and signed_amount = #{signedAmount} </if>
+		  		  <if test="isDelete != null and isDelete != ''"> and is_delete = #{isDelete} </if>
+		  		  <if test="constructionOrganiz != null and constructionOrganiz != ''"> and construction_organiz = #{constructionOrganiz} </if>
+		  		  <if test="projectName != null and projectName != ''"> and project_name = #{projectName} </if>
+		  		  <if test="projectSite != null and projectSite != ''"> and project_site = #{projectSite} </if>
+		  		  <if test="concretePlanAmount != null and concretePlanAmount != ''"> and concrete_plan_amount = #{concretePlanAmount} </if>
+		  		  <if test="oncreteActualAmount != null and oncreteActualAmount != ''"> and oncrete_actual_amount = #{oncreteActualAmount} </if>
+		  		  <if test="contractStartDate != null and contractStartDate != ''"> and contract_start_date = #{contractStartDate} </if>
+		  		  <if test="contractOverDate != null and contractOverDate != ''"> and contract__over_date = #{contractOverDate} </if>
+		  		  <if test="accountLimit != null and accountLimit != ''"> and account_limit = #{accountLimit} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by contract_guid desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from tb_sell_contract
+		 <where>  
+		  		  <if test="contractGuid != null and contractGuid != ''"> and contract_guid = #{contractGuid} </if>
+		  		  <if test="contractCode != null and contractCode != ''"> and contract_code = #{contractCode} </if>
+		  		  <if test="clientGuid != null and clientGuid != ''"> and client_guid = #{clientGuid} </if>
+		  		  <if test="contractName != null and contractName != ''"> and contract_name = #{contractName} </if>
+		  		  <if test="signedAmount != null and signedAmount != ''"> and signed_amount = #{signedAmount} </if>
+		  		  <if test="isDelete != null and isDelete != ''"> and is_delete = #{isDelete} </if>
+		  		  <if test="constructionOrganiz != null and constructionOrganiz != ''"> and construction_organiz = #{constructionOrganiz} </if>
+		  		  <if test="projectName != null and projectName != ''"> and project_name = #{projectName} </if>
+		  		  <if test="projectSite != null and projectSite != ''"> and project_site = #{projectSite} </if>
+		  		  <if test="concretePlanAmount != null and concretePlanAmount != ''"> and concrete_plan_amount = #{concretePlanAmount} </if>
+		  		  <if test="oncreteActualAmount != null and oncreteActualAmount != ''"> and oncrete_actual_amount = #{oncreteActualAmount} </if>
+		  		  <if test="contractStartDate != null and contractStartDate != ''"> and contract_start_date = #{contractStartDate} </if>
+		  		  <if test="contractOverDate != null and contractOverDate != ''"> and contract__over_date = #{contractOverDate} </if>
+		  		  <if test="accountLimit != null and accountLimit != ''"> and account_limit = #{accountLimit} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.sales.domain.TbSellContractDO">
+		insert into tb_sell_contract
+		(
+			`contract_guid`, 
+			`contract_code`, 
+			`client_guid`, 
+			`contract_name`, 
+			`signed_amount`, 
+			`is_delete`, 
+			`construction_organiz`, 
+			`project_name`, 
+			`project_site`, 
+			`concrete_plan_amount`, 
+			`oncrete_actual_amount`, 
+			`contract_start_date`, 
+			`contract__over_date`, 
+			`account_limit`, 
+			`status`
+		)
+		values
+		(
+			#{contractGuid}, 
+			#{contractCode}, 
+			#{clientGuid}, 
+			#{contractName}, 
+			#{signedAmount}, 
+			#{isDelete}, 
+			#{constructionOrganiz}, 
+			#{projectName}, 
+			#{projectSite}, 
+			#{concretePlanAmount}, 
+			#{oncreteActualAmount}, 
+			#{contractStartDate}, 
+			#{contractOverDate}, 
+			#{accountLimit}, 
+			#{status}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.sales.domain.TbSellContractDO">
+		update tb_sell_contract 
+		<set>
+			<if test="contractCode != null">`contract_code` = #{contractCode}, </if>
+			<if test="clientGuid != null">`client_guid` = #{clientGuid}, </if>
+			<if test="contractName != null">`contract_name` = #{contractName}, </if>
+			<if test="signedAmount != null">`signed_amount` = #{signedAmount}, </if>
+			<if test="isDelete != null">`is_delete` = #{isDelete}, </if>
+			<if test="constructionOrganiz != null">`construction_organiz` = #{constructionOrganiz}, </if>
+			<if test="projectName != null">`project_name` = #{projectName}, </if>
+			<if test="projectSite != null">`project_site` = #{projectSite}, </if>
+			<if test="concretePlanAmount != null">`concrete_plan_amount` = #{concretePlanAmount}, </if>
+			<if test="oncreteActualAmount != null">`oncrete_actual_amount` = #{oncreteActualAmount}, </if>
+			<if test="contractStartDate != null">`contract_start_date` = #{contractStartDate}, </if>
+			<if test="contractOverDate != null">`contract__over_date` = #{contractOverDate}, </if>
+			<if test="accountLimit != null">`account_limit` = #{accountLimit}, </if>
+			<if test="status != null">`status` = #{status}</if>
+		</set>
+		where contract_guid = #{contractGuid}
+	</update>
+	
+	<delete id="remove">
+		delete from tb_sell_contract where contract_guid = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from tb_sell_contract where contract_guid in 
+		<foreach item="contractGuid" collection="array" open="(" separator="," close=")">
+			#{contractGuid}
+		</foreach>
+	</delete>
+
+	<select id="findClietCode" resultType="java.lang.String">
+   SELECT  substring_index(contract_code,'HT',-1) contract_code  FROM tb_sell_contract
+  ORDER BY contract_code DESC LIMIT 1
+</select>
+</mapper>

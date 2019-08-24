@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.system.dao.TbSysDicListDao">
+
+	<select id="get" resultType="com.bootdo.system.domain.TbSysDicListDO">
+		select `dic_list_id`,`type_tag`,`type_alias`,`type_desc`,`type_name`,`dic_desc`,`dic_value`,`is_delete` from tb_sys_dic_list where dic_list_id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.system.domain.TbSysDicListDO">
+		select `dic_list_id`,`type_tag`,`type_alias`,`type_desc`,`type_name`,`dic_desc`,`dic_value`,`is_delete` from tb_sys_dic_list
+        <where>  
+		  		  <if test="dicListId != null and dicListId != ''"> and dic_list_id = #{dicListId} </if>
+		  		  <if test="typeTag != null and typeTag != ''"> and type_tag = #{typeTag} </if>
+		  		  <if test="typeAlias != null and typeAlias != ''"> and type_alias = #{typeAlias} </if>
+		  		  <if test="typeDesc != null and typeDesc != ''"> and type_desc = #{typeDesc} </if>
+		  		  <if test="typeName != null and typeName != ''"> and type_name = #{typeName} </if>
+		  		  <if test="dicDesc != null and dicDesc != ''"> and dic_desc = #{dicDesc} </if>
+		  		  <if test="dicValue != null and dicValue != ''"> and dic_value = #{dicValue} </if>
+		  		  <if test="isDelete != null and isDelete != ''"> and is_delete = #{isDelete} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by dic_list_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from tb_sys_dic_list
+		 <where>  
+		  		  <if test="dicListId != null and dicListId != ''"> and dic_list_id = #{dicListId} </if>
+		  		  <if test="typeTag != null and typeTag != ''"> and type_tag = #{typeTag} </if>
+		  		  <if test="typeAlias != null and typeAlias != ''"> and type_alias = #{typeAlias} </if>
+		  		  <if test="typeDesc != null and typeDesc != ''"> and type_desc = #{typeDesc} </if>
+		  		  <if test="typeName != null and typeName != ''"> and type_name = #{typeName} </if>
+		  		  <if test="dicDesc != null and dicDesc != ''"> and dic_desc = #{dicDesc} </if>
+		  		  <if test="dicValue != null and dicValue != ''"> and dic_value = #{dicValue} </if>
+		  		  <if test="isDelete != null and isDelete != ''"> and is_delete = #{isDelete} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.system.domain.TbSysDicListDO" useGeneratedKeys="true" keyProperty="dicListId">
+		insert into tb_sys_dic_list
+		(`dic_list_id`,
+			`type_tag`, 
+			`type_alias`,
+			`type_desc`, 
+			`type_name`, 
+			`dic_desc`, 
+			`dic_value`, 
+			`is_delete`
+		)
+		values
+		(#{dicListId},
+			#{typeTag},
+			#{typeAlias},
+			#{typeDesc}, 
+			#{typeName}, 
+			#{dicDesc}, 
+			#{dicValue}, 
+			#{isDelete}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.system.domain.TbSysDicListDO">
+		update tb_sys_dic_list 
+		<set>
+			<if test="typeTag != null">`type_tag` = #{typeTag}, </if>
+			<if test="typeAlias != null">`type_alias` = #{typeAlias}, </if>
+			<if test="typeDesc != null">`type_desc` = #{typeDesc}, </if>
+			<if test="typeName != null">`type_name` = #{typeName}, </if>
+			<if test="dicDesc != null">`dic_desc` = #{dicDesc}, </if>
+			<if test="dicValue != null">`dic_value` = #{dicValue}, </if>
+			<if test="isDelete != null">`is_delete` = #{isDelete}</if>
+		</set>
+		where dic_list_id = #{dicListId}
+	</update>
+	
+	<delete id="remove">
+		delete from tb_sys_dic_list where dic_list_id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from tb_sys_dic_list where dic_list_id in 
+		<foreach item="dicListId" collection="array" open="(" separator="," close=")">
+			#{dicListId}
+		</foreach>
+	</delete>
+
+</mapper>

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header">
+	<style>
+		#Repair ul{
+			border-top:1px solid #e7e7e7
+		}
+		li{
+			list-style:none
+		}
+		.istItemOption{
+			position: relative;
+			border:1px solid #e7e7e7;
+			border-top: none;
+			padding-right:40px;
+			height: 42px;
+		}
+		.istItemOption:after{
+			display: table;
+			content: " ";
+			clear: both;
+		}
+		.add_btn{
+			position: absolute;
+			right: 6px;
+			top: 4px;
+		}
+		.remove_btn{
+			position: absolute;
+			right: 6px;
+			top: 4px;
+		}
+		.jxx_span{
+			border-right:1px solid #e7e7e7;
+			border-bottom:1px solid #e7e7e7;
+			display: block;
+			float:left;
+			width: 33.3%;
+			padding:5px 10px;
+			text-align:left;
+			line-height: 30px;
+			height:42px;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			vertical-align: middle;
+			overflow: hidden;
+		}
+		.ItemOption{
+			cursor: pointer;
+		}
+		.ItemOptionHide,.istItemOptionHide{
+			background: #F0F8FA;
+			border: 1px solid #e7e7e7;
+			margin-top: 0px;
+			padding: 15px 0;
+			display: none;
+		}
+		.item_list_hide,.per_item_list_hide{
+			display: none;
+		}
+		#parts .peijian{
+			width:100%;
+		}
+		#parts .peijian buttion{
+			border:none
+		}
+		.form-group-31{
+			margin-bottom:10px
+		}
+		.form-group label{
+			margin-left:0
+		}
+		.form-group .control-label{
+			text-align: right;
+			width:20%
+		}
+		.form-group:after{
+			clear: both;
+			display: table;
+			content: " ";
+		}
+		.sec_editDiv .input_text{
+			width:70.2%
+		}
+		.bootstrap-select.form-control:not([class*="span"]){
+			width: 70.2%;
+		}
+		#leftRpRegisterTrack{
+			padding:20px 15px
+		}
+		#leftRpRegisterTrack ul{
+			margin-bottom:15px
+		}
+		#leftRpRegisterTrack ul:first-child {
+			color: #1ab394;
+		}
+		.nbuwxs .btn-group>.btn:first-child{
+			width:140%
+		}
+		#leftRpRegisterTrack ul {
+			border-left: 1px solid #999;
+			position: relative;
+			color:#999;
+			margin-bottom: 15px;
+			padding-left: 15px;
+		}
+		#leftRpRegisterTrack ul:before{
+			display: table;
+			content: " ";
+			background: #999;
+			width: 16px;
+			height: 16px;
+			border-radius: 50%;
+			position: absolute;
+			left: -9px;
+		}
+		#leftRpRegisterTrack ul:first-child:before{
+			background: #1ab394;
+		}
+		#leftRpRegisterTrack ul:first-child {
+			border-left: 1px solid #1ab394;
+		}
+		#pinfen td,#pinfen th{
+			padding:5px;
+			line-height: 32px;
+		}
+		#leftRpRegisterTrack ul li p:nth-child(1){
+			font-weight:bold
+		}
+		.jcbxtp{
+			width:145px;
+			float:left;
+			margin-right:15px;
+			margin-bottom:10px;
+			line-height: 100px;			height:100px;
+
+			white-space: nowrap;
+			border:1px solid #eee;
+			background:#eee;
+			text-align: center;
+		}
+		.jcbxtp img{
+			max-width: 145px;
+			max-height: 100px;
+			vertical-align: middle;
+		}
+		#leftRpRegisterTrack li p span{
+			word-break:break-all;
+			word-wrap:break-word
+		}
+		.typeclass{
+			padding-bottom:50px !important
+		}
+		.form-group label {
+			height: auto;
+			line-height: 25px;
+			text-align: left;
+		}
+		.checkbox-inline+.checkbox-inline,.radio-inline+.radio-inline{
+			font-size: 15px;
+		}
+		.bootstrap-select.form-control:not([class*="span"]){
+			width:55%
+		}
+		.dropdown-menu>.active>a, .dropdown-menu>.active>a:focus, .dropdown-menu>.active>a:hover{
+			background:#49617F;
+		}
+		.form-horizontal .radio-inline{
+			line-height: 22px;
+			font-size: 15px;
+		}
+		.reportEqGuid button{
+			cursor: not-allowed;
+			background: #eee!important;
+			outline: none !important;
+			box-shadow: none !important;
+		}
+		.reportEqGuid .dropdown-menu{
+			display: none;
+		}
+		.reportEqGuid .bootstrap-select .btn:focus{
+			outline: none !important;
+		}
+	</style>
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content ">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="ibox float-e-margins">
+				<div class="ibox-content">
+					<form class="form-horizontal m-t" id="signupForm">
+						<input id="contractGuid" name="contractGuid" th:value="${tbSellContract.contractGuid}"  type="hidden">
+						<div  class="sec_editDiv">
+							<div class="left_sec">
+								<label  for="" class=" control-label left_label">合同编号：</label>
+								<input type="text" class="form-control must input_text" readonly  id="contractCode" name="contractCode" th:value="${tbSellContract.contractCode}">
+							</div>
+							<div class="right_sec">
+								<label for="" class=" control-label right_label">客户名称：</label>
+								<input type="text" class="form-control must input_text" id="clientGuid" nam="clientGuid" th:value="${tbSellContract.clientGuid}"/>
+							</div>
+							<div style="clear:both"></div>
+						</div>
+
+						<div  class="sec_editDiv">
+							<div class="left_sec">
+								<label  for="" class=" control-label left_label">合同名称：</label>
+								<input type="text" id="contractName" name="contractName"class="form-control must input_text" th:value="${tbSellContract.contractName}" />
+							</div>
+							<div class="right_sec">
+								<label class="control-label right_label">工程地点：</label>
+								<input id="projectSite" name="projectSite" class="form-control must input_text" type="text"th:value="${tbSellContract.projectSite}"/>
+							</div>
+							<div style="clear:both"></div>
+
+						</div>
+
+						<div  class="sec_editDiv">
+							<div class="left_sec">
+								<label class="control-label left_label">施工单位：</label>
+								<input id="constructionOrganiz" name="constructionOrganiz" class="form-control must input_text" type="text"th:value="${tbSellContract.constructionOrganiz}"/>
+
+							</div>
+							<div class="right_sec">
+								<label class="control-label right_label">工程名称：</label>
+								<input id="projectName" name="projectName" class="form-control must input_text" type="text" th:value="${tbSellContract.projectName}"/>
+							</div>
+						<div style="clear:both"></div>
+
+						</div>
+						<div  class="sec_editDiv">
+							<div class="left_sec">
+								<label class="control-label left_label">签订总方量：</label>
+								<input id="signedAmount" name="signedAmount" class="form-control must input_text" type="text"th:value="${tbSellContract.signedAmount}"/>
+							</div>
+							<div class="right_sec">
+								<label class="control-label right_label">结款限量：</label>
+								<input id="accountLimit" name="accountLimit" class="form-control must input_text" type="text" th:value="${tbSellContract.accountLimit}"/>
+							</div>
+							<div style="clear:both"></div>
+
+						</div>
+						<div  class="sec_editDiv">
+							<div class="left_sec">
+								<label class="control-label left_label">砼实际方量：</label>
+								<input id="oncreteActualAmount" name="oncreteActualAmount" class="form-control must input_text" type="text" th:value="${tbSellContract.oncreteActualAmount}"/>
+
+							</div>
+							<div class="right_sec">
+								<label class="control-label right_label">砼计划方量：</label>
+								<input id="concretePlanAmount" name="concretePlanAmount" class="form-control must input_text" type="text" th:value="${tbSellContract.concretePlanAmount}"/>
+							</div>
+							<div style="clear:both"></div>
+
+						</div>
+
+						<div  class="sec_editDiv">
+							<div class="left_sec">
+								<label class="control-label left_label">合同开始日期：</label>
+								<input id="contractStartDate" name="contractStartDate" class="form-control must input_text" type="text" th:value="${tbSellContract.contractStartDate}"/>
+
+							</div>
+							<div class="right_sec">
+								<label class="control-label right_label">合同结束日期：</label>
+								<input id="contractOverDate" name="contractOverDate" class="form-control must input_text" type="text" th:value="${tbSellContract.contractOverDate}"/>
+							</div><div style="clear:both"></div>
+						</div>
+
+						<div class="sec_editDiv">
+							<iframe class="docUpload" id="docUpload" name="docUpload" src="/common/sysFile/multiple?&#10;&#9;ext=*.jpg;*.bmp;*.png;*.doc;*.docx;*.pdf&amp;url=/common/sysFile/mutilpFileUpload&amp;callback=parent.uploadSuccess&amp;formMapsizel&#10;&#9;imit=5&amp;btn=上传附件" style="margin-left:8%;padding-left: 25px;"></iframe>
+							<input class="form-control must input_text" id="annexNum" name="annexNum" type="hidden" value="0">
+							<input class="form-control must input_text" id="filePath" name="filePath" type="hidden" value="">
+							<input class="form-control must input_text" id="fileName" name="fileName" type="hidden" value="">
+							<input class="form-control must input_text" id="fileType" name="fileType" type="hidden" value="">
+						</div>
+
+						<div role="tabpanel" class="tab-pane " id="parts">
+							<div style="width:60%;margin-left:10%;margin-top:30px">
+								<ul  class="item_list" style="border-top:1px solid #e7e7e7">
+									<li>
+										<div class="istItemOption">
+											<span class="jxx_span" style="width:25%"><input  style="width: 15%;" value="施工部位"/></span>
+											<span class="jxx_span" style="width:25%"><input  style="width: 15%;" value="砼强度等级"/></span>
+											<span class="jxx_span" style="width:25%"><input  style="width: 15%" value="坍落度"/></span>
+											<span class="jxx_span" style="width:25%"><input style="width: 15%" value="砼计划方量"/></span>
+											<span class="jxx_span" style="width:25%"><input style="width: 15%" value="砼实际方量"/></span>
+											<p class="add_btn"></p>
+										</div>
+									</li>
+									<li th:each="tbSellContractTo:${tbSellContractListList}" >
+										<div class="istItemOption ItemOption" >
+											<span class="jxx_span" style="width:25%;border-bottom:1px solid #e7e7e7"><input  th:value="${tbSellContractTo.constructionPart}" class="constructionPart" style="width:15%" /></span>
+											<span class="jxx_span" style="width:25%;border-bottom:1px solid #e7e7e7" ><input th:value="${tbSellContractTo.concreteStrengthGrade}" class="concreteStrengthGrade" style="width:15%"/></span>
+											<span class="jxx_span" style="width:25%;border-bottom:1px solid #e7e7e7"  ><input th:value="${tbSellContractTo.concreteSlump}" class="concreteSlump" style="width:15%"/></span>
+											<span class="jxx_span" style="width:25%;border-bottom:1px solid #e7e7e7"><input th:value="${tbSellContractTo.concretePlanAmount}" class="concretePlanAmount"   style="width:15%"/></span>
+											<span class="jxx_span" style="width:25%;border-bottom:1px solid #e7e7e7"><input th:value="${tbSellContractTo.oncreteActualAmount}" class="oncreteActualAmount"  style="width:15%"/></span>
+											<p class="remove_btn"></p>
+										</div>
+									</li>
+								</ul>
+
+								<ul class="item_list_hide" style="display:none">
+									<li>
+										<div class="istItemOption ItemOption">
+											<span class="jxx_span" style="width:25%;  overflow: initial;"><input  class="constructionPart" style="width:15%" /></span>
+											<span class="jxx_span" style="width:25%;cursor:not-allowed"><input class="concreteStrengthGrade" style="width:15%" /></span>
+											<span class="jxx_span" style="width:25%;cursor:not-allowed"><input class="concreteSlump"  style="width:15%"/></span>
+											<span class="jxx_span" style="width:25%;padding:0"><input class="concretePlanAmount"    style="width:15%"/></span>
+											<span class="jxx_span" style="width:25%;padding:0"><input  class="oncreteActualAmount"   style="width:15%"/></span>
+											<p class="remove_btn"></p>
+										</div>
+									</li>
+								</ul>
+
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-8 col-sm-offset-3">
+								<button type="submit" class="btn btn-primary">提交</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div th:include="include::footer"></div>
+<script type="text/javascript" src="/js/appjs/sales/tbSellContract/edit.js">
+	</script>
+</body>
+</html>

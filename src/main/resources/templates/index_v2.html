@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css"  media="screen"  href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css"  media="screen"  href="css/common.css">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/header.js"></script>
+
+    <style>
+        .navbar-default {
+            background-color: #fff;
+            margin-bottom: 0;
+        }
+        .navbar {
+            min-height: 80px;
+        }
+        .navbar-default .navbar-nav>li>a {
+            margin: 15px 0;
+            color:#333
+        }
+        .navbar-default .navbar-form{
+            margin-top:23px
+        }
+        .navbar-brand {
+            height: 80px;
+            padding: 12px 15px;
+        }
+        .navbar-brand {
+            padding: 12px 10px;
+        }
+        .btn-def {
+            display: inline-block;
+            padding: 9px 12px;
+            margin-bottom: 0;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background-image: none;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            color: #fff;
+            background-color: #14396A;
+            border:none;
+            height: 34px;
+            width:50px;
+        }
+        .btn-def:focus, .btn-def:hover ,.btn-def:active, .btn-def:active:focus{
+            text-decoration: none;
+            outline: none;
+            color: #fff
+        }
+        .nav-link{
+            width: 20px;
+            height: 20px;
+            background-image: url(img/image.png);
+            display: block;
+            background-position:-25px -436px;;
+        }
+        .nav-counter {
+            position: absolute;
+            top: 11px;
+            right: 6px;
+            min-width: 8px;
+            height: 20px;
+            line-height: 20px;
+            margin-top: -11px;
+            padding: 0 6px;
+            font-weight: normal;
+            color: white;
+            text-align: center;
+            text-shadow: 0 1px rgba(0, 0, 0, 0.2);
+            background: #e23442;
+            border: 1px solid #911f28;
+            border-radius: 11px;
+            background-image: -webkit-linear-gradient(top, #e8616c, #dd202f);
+            background-image: -moz-linear-gradient(top, #e8616c, #dd202f);
+            background-image: -o-linear-gradient(top, #e8616c, #dd202f);
+            background-image: linear-gradient(to bottom, #e8616c, #dd202f);
+            -webkit-box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, 0.1), 0 1px rgba(0, 0, 0, 0.12);
+            box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, 0.1), 0 1px rgba(0, 0, 0, 0.12);
+        }
+        .nav-counter-red {
+            background: #F9354C;
+            border: 1px solid #F9354C;
+            background-image: -webkit-linear-gradient(top, #F9354C, #F9354C);
+            background-image: -moz-linear-gradient(top, #8ec15b, #F9354C);
+            background-image: -o-linear-gradient(top, #F9354C, #F9354C);
+            background-image: linear-gradient(to bottom, #F9354C, #F9354C);
+        }
+        .help_icon {
+            width: 21px;
+            height: 21px;
+            background-image: url(img/image.png);
+            display: block;
+            background-position: -83px -436px;
+        }
+        .down_arrow {
+            width: 15px;
+            height: 15px;
+            background-image: url(img/image.png);
+            display: block;
+            background-position: -133px -428px;
+        }
+        .login_out {
+            color: #fff;
+            float: right;
+        }
+        .login_out i {
+            width: 170px;
+            height: 36px;
+            background-image: url(img/image.png);
+            display: block;
+            background-position: -1px -155px;
+            margin-top: -7px;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#"><img src="img/logo.png" style="height:56px;margin-left:15px"></a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" >
+            <ul class="nav navbar-nav navbar-right">
+                <form class="navbar-form navbar-left">
+                    <div class="form-group">
+                        <input type="text" class="form-control" >
+                    </div>
+                    <a  class=" btn-def"><span class="glyphicon glyphicon-search" style="color:#fff"></span></a>
+                </form>
+                <li>
+                    <a href="javascript:;">
+                        <span class="nav-link"></span>
+                        <div class="nav-counter nav-counter-red">1</div>
+                    </a>
+                </li>
+                <li>
+                    <a  href="javascript:;" style="padding-right:0">
+                        <span class="help_icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a  href="javascript:;"  style="padding-left: 5px;padding-right:0 ">
+                        <span>帮助</span>
+                    </a>
+                </li>
+                <li>
+                    <a  href="javascript:;" style="padding-left:5px;padding-right:0 ">
+                        <span class="down_arrow"></span>
+                    </a>
+                </li>
+                <li>
+                    <a  href="javascript:;" style="padding-right:0 ">
+                        <span>管理员</span>
+                    </a>
+                </li>
+                <li>
+                    <a  href="javascript:;" style="padding-left:5px;padding-right:0 ">
+                        <span class="down_arrow"></span>
+                    </a>
+                </li>
+                <li>
+                    <a  href="javascript:;">
+                        <span class="login_out" onclick=""><i class="exit_icon"></i>退出账号</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<style>
+    .title_left{
+        display:block;
+        cursor: pointer;
+        border-top: 1px solid #3B444E;
+        line-height: 70px;
+        font-size: 16px;
+        color: #fff;
+        font-weight: normal;
+    }
+    .title a:hover, .title a:focus {
+        color: #fff;
+        text-decoration: none;
+    }
+    .title li{
+        list-style:none;
+        position: relative;
+    }
+    .title a{
+        color:#fff;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        -o-text-overflow: ellipsis;
+        overflow: hidden;
+    }
+    .title  .glyphicon{
+        color:#fff;
+        margin-right: 5px;
+        transition: all .5s;
+        margin-left: 5px;
+    }
+
+    #left_title .leftSys>ul a{
+        line-height:30px;
+        padding-top:5px;
+        padding-bottom:5px;
+        padding-left:30px;
+        display:block;
+        border-bottom:1px solid #3B444E;
+    }
+    #left_title .leftSys>ul ul a{
+        padding-left:45px
+    }
+    #left_title .leftSys>ul ul ul a{
+        padding-left:60px
+    }
+    .bgactive{
+        background:#195171
+    }
+    #left_title .active1>i {
+        transform: rotate(90deg);
+    }
+    .title_left>i{
+        position: absolute;
+        right: 10px;
+        top: 30px;
+    }
+    .leftSys ul{
+        display:none
+    }
+</style>
+<div class="main">
+    <div  id="lefttitle" class="title">
+        <ul id="left_title">
+
+        </ul>
+    </div>
+    <div class="right">
+        <div class="sec_main">
+            <iframe  id="mainFrame" class="main_frame" style="width:100%;padding-left:220px;left:0;position:absolute;"></iframe>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.alarm.dao.TbAlarmMsgDao">
+
+	<select id="get" resultType="com.bootdo.alarm.domain.TbAlarmMsgDO">
+		select `msg_guid`,`remark1`,`remark2`,`remark3`,`remark4`,`remark5`,`msg_code`,`is_undo_task`,`write_day`,`msg_content`,`msg_object`,`msg_key`,`define_id` from tb_alarm_msg where msg_guid = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.alarm.domain.TbAlarmMsgDO">
+		select `msg_guid`,`remark1`,`remark2`,`remark3`,`remark4`,`remark5`,`msg_code`,`is_undo_task`,`write_day`,`msg_content`,`msg_object`,`msg_key`,`define_id` from tb_alarm_msg
+        <where>  
+		  		  <if test="msgGuid != null and msgGuid != ''"> and msg_guid = #{msgGuid} </if>
+		  		  <if test="remark1 != null and remark1 != ''"> and remark1 = #{remark1} </if>
+		  		  <if test="remark2 != null and remark2 != ''"> and remark2 = #{remark2} </if>
+		  		  <if test="remark3 != null and remark3 != ''"> and remark3 = #{remark3} </if>
+		  		  <if test="remark4 != null and remark4 != ''"> and remark4 = #{remark4} </if>
+		  		  <if test="remark5 != null and remark5 != ''"> and remark5 = #{remark5} </if>
+		  		  <if test="msgCode != null and msgCode != ''"> and msg_code = #{msgCode} </if>
+		  		  <if test="isUndoTask != null and isUndoTask != ''"> and is_undo_task = #{isUndoTask} </if>
+		  		  <if test="writeDay != null and writeDay != ''"> and write_day = #{writeDay} </if>
+		  		  <if test="msgContent != null and msgContent != ''"> and msg_content = #{msgContent} </if>
+		  		  <if test="msgObject != null and msgObject != ''"> and msg_object = #{msgObject} </if>
+		  		  <if test="msgKey != null and msgKey != ''"> and msg_key = #{msgKey} </if>
+		  		  <if test="defineId != null and defineId != ''"> and define_id = #{defineId} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by msg_guid desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from tb_alarm_msg
+		 <where>  
+		  		  <if test="msgGuid != null and msgGuid != ''"> and msg_guid = #{msgGuid} </if>
+		  		  <if test="remark1 != null and remark1 != ''"> and remark1 = #{remark1} </if>
+		  		  <if test="remark2 != null and remark2 != ''"> and remark2 = #{remark2} </if>
+		  		  <if test="remark3 != null and remark3 != ''"> and remark3 = #{remark3} </if>
+		  		  <if test="remark4 != null and remark4 != ''"> and remark4 = #{remark4} </if>
+		  		  <if test="remark5 != null and remark5 != ''"> and remark5 = #{remark5} </if>
+		  		  <if test="msgCode != null and msgCode != ''"> and msg_code = #{msgCode} </if>
+		  		  <if test="isUndoTask != null and isUndoTask != ''"> and is_undo_task = #{isUndoTask} </if>
+		  		  <if test="writeDay != null and writeDay != ''"> and write_day = #{writeDay} </if>
+		  		  <if test="msgContent != null and msgContent != ''"> and msg_content = #{msgContent} </if>
+		  		  <if test="msgObject != null and msgObject != ''"> and msg_object = #{msgObject} </if>
+		  		  <if test="msgKey != null and msgKey != ''"> and msg_key = #{msgKey} </if>
+		  		  <if test="defineId != null and defineId != ''"> and define_id = #{defineId} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.alarm.domain.TbAlarmMsgDO">
+		insert into tb_alarm_msg
+		(
+			`msg_guid`, 
+			`remark1`, 
+			`remark2`, 
+			`remark3`, 
+			`remark4`, 
+			`remark5`, 
+			`msg_code`, 
+			`is_undo_task`, 
+			`write_day`, 
+			`msg_content`, 
+			`msg_object`, 
+			`msg_key`, 
+			`define_id`
+		)
+		values
+		(
+			#{msgGuid}, 
+			#{remark1}, 
+			#{remark2}, 
+			#{remark3}, 
+			#{remark4}, 
+			#{remark5}, 
+			#{msgCode}, 
+			#{isUndoTask}, 
+			#{writeDay}, 
+			#{msgContent}, 
+			#{msgObject}, 
+			#{msgKey}, 
+			#{defineId}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.alarm.domain.TbAlarmMsgDO">
+		update tb_alarm_msg 
+		<set>
+			<if test="remark1 != null">`remark1` = #{remark1}, </if>
+			<if test="remark2 != null">`remark2` = #{remark2}, </if>
+			<if test="remark3 != null">`remark3` = #{remark3}, </if>
+			<if test="remark4 != null">`remark4` = #{remark4}, </if>
+			<if test="remark5 != null">`remark5` = #{remark5}, </if>
+			<if test="msgCode != null">`msg_code` = #{msgCode}, </if>
+			<if test="isUndoTask != null">`is_undo_task` = #{isUndoTask}, </if>
+			<if test="writeDay != null">`write_day` = #{writeDay}, </if>
+			<if test="msgContent != null">`msg_content` = #{msgContent}, </if>
+			<if test="msgObject != null">`msg_object` = #{msgObject}, </if>
+			<if test="msgKey != null">`msg_key` = #{msgKey}, </if>
+			<if test="defineId != null">`define_id` = #{defineId}</if>
+		</set>
+		where msg_guid = #{msgGuid}
+	</update>
+	
+	<delete id="remove">
+		delete from tb_alarm_msg where msg_guid = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from tb_alarm_msg where msg_guid in 
+		<foreach item="msgGuid" collection="array" open="(" separator="," close=")">
+			#{msgGuid}
+		</foreach>
+	</delete>
+
+</mapper>

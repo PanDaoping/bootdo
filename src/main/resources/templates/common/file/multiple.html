@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css"  media="screen"  href="/js/queuedupload/multiple.css">
+    <script src="/js/jquery.min.js?v=2.1.4"></script>
+    <script type="text/javascript" src="/js/queuedupload/swfupload.js"></script>
+    <script type="text/javascript" src="/js/queuedupload/handlers.js"></script>
+    <script type="text/javascript" src="/js/queuedupload/swfupload.queue.js"></script>
+    <script type="text/javascript" src="/js/queuedupload/fileprogress.js"></script>
+    <script type="text/javascript" src="/js/queuedupload/lhgdialog/lhgdialog.min.js?skin=chrome"></script>
+    <script type="text/javascript">
+        //注意：下面的代码是放在iframe引用的子页面中调用
+        function getParam(paramName) {    //获取路径参数
+            paramValue = "", isFound = !1;
+            if (this.location.search.indexOf("?") == 0 && this.location.search.indexOf("=") > 1) {
+                arrSource = unescape(this.location.search).substring(1, this.location.search.length).split("&"), i = 0;
+                while (i < arrSource.length && !isFound) arrSource[i].indexOf("=") > 0 && arrSource[i].split("=")[0].toLowerCase() == paramName.toLowerCase() && (paramValue = arrSource[i].split("=")[1], isFound = !0), i++
+            }
+            return paramValue == "" && (paramValue = null), paramValue
+        }
+        var swfu;
+        $(function(){
+            $('#geshi').html( '支持上传'+$('#ext').val()+'格式文件');
+            $('body').delegate('video','contextmenu',function(){
+                return false;
+            })
+            window.onload = function () {
+                if(getParam('docShow')){
+                    $('#docUploadProgress').hide()
+                }
+                var settings = {
+                    flash_url: "/js/queuedupload/swfupload.swf",
+                    file_post_name: "file",
+                    upload_url: $("#url").val(),
+                    file_size_limit: $("#sizelimit").val()+" MB"  ,
+                    file_types: $("#ext").val(),
+                    file_types_description: "支持的格式",
+                    file_upload_limit: 100,
+                    file_queue_limit: 0,
+                    custom_settings: {
+                        progressTarget: "fsUploadProgress",
+                        cancelButtonId: "btnCancel",
+                        beginButtonId: "btnBegin"
+                    },
+                    debug: false,
+
+                    // Button settings
+                    button_image_url: "/js/queuedupload/uploadbtn.png",
+                    button_placeholder_id: "spanButtonPlaceHolder",
+                    button_width: 86,
+                    button_height: 28,
+                    button_text: '<span class="button">'+$("#btn").val()+'</span>',
+                    button_text_style: '.button {FONT-FAMILY: 微软雅黑.Arial, Helvetica, sans-serif, "宋体";font-size: 15px;display:inline-block;width:100%;text-align:center;} .buttonSmall { font-size: 15px; }',
+                    button_text_top_padding:3,
+                    button_text_left_padding: 0,
+
+                    // The event handler functions are defined in handlers.js
+                    file_queued_handler: fileQueued,
+                    file_queue_error_handler: fileQueueError,
+                    file_dialog_complete_handler: fileDialogComplete,
+                    upload_start_handler: uploadStart,
+                    upload_progress_handler: uploadProgress,
+                    upload_error_handler: uploadError,
+                    upload_success_handler: uploadSuccess,
+                    upload_complete_handler: uploadComplete,
+                    queue_complete_handler: queuesComplete	// Queue plugin event
+                };
+
+                swfu = new SWFUpload(settings);
+
+            };
+            $('body').delegate('.progressCancel','click',function(){
+                $(this).closest('.progressWrapper').remove()
+                var filepath = $(this).siblings(".progressImg").attr("data");
+                $.post("/common/sysFile/deleteServerFile.do?url="+filepath,function(data){
+                    //parent.deleteImage(filePath);
+                    var main = $(window.parent.document).find("#docUpload");
+                    if(main.length==0){
+                        main = $(window.parent.document).find(".docUpload:visible");
+                    }
+                    var thisheight = $('body').height() + 40;
+                    main.height(thisheight);
+                });
+            })
+            $('body').delegate('#fsUploadProgress img','click',function(){
+                var imgbox=[];
+                imgbox.push({href:$(this).attr('src')});
+                $('#fsUploadProgress img').not(this).each(function(){
+                    imgbox.push({href:$(this).attr('src')});
+                })
+                parent.upImagesFancybox(imgbox)
+            })
+        })
+
+
+        function beginUpload() {
+            //document.getElementById("btnBegin").disabled = true;
+            swfu.startUpload();
+        }
+        function RndNum(n){   //产生随机数函数
+            var rnd="";
+            for(var i=0;i<n;i++)
+                rnd+=Math.floor(Math.random()*10);
+            return rnd;
+        }
+        function uploadSuccess(file,serverData) {
+            try {
+                var main = $(window.parent.document).find("#docUpload");
+                var thisheight = $(document).height() + 30;
+                main.height(thisheight);
+                // var json = serverData;
+                var  filePath="";
+                var json = eval('(' + serverData + ')');
+                if(json.filePath!=""){
+                    var extension = json.extension;
+                    var isImg = json.isImg;
+                    var progressTarget = "docUploadProgress";
+                    // if(isImg=="true"){
+                        progressTarget = this.customSettings.progressTarget;
+                    // }
+                    var progress = new FileProgress(file, progressTarget);
+
+                    if($("#"+file.id+' img').length ){
+                       if(  extension=='jpg' ||  extension=='png' || extension=='bmp'||extension=='JPG' ||  extension=='PNG' || extension=='BMP' ){
+                            file.id='SWFUpload_'+RndNum(12)
+                            var filehtml='<div class="progressWrapper" id="'+file.id+'" style="opacity: 1;"> <div class="progressContainer"><a class="progressCancel" href="#"> </a><div class="progressImg" data="" data1="" data2=""><img src="" data-original=""></div><div class="progressName"></div><div class="progressBarStatus">&nbsp;</div><div class="progressBarInProgress" style="width: 0%;"></div><div class="progressPercent">0%</div></div></div>'
+                            $('#fsUploadProgress').append(filehtml)
+                      }else {
+                           file.id='SWFUpload_'+RndNum(12)
+                           var filehtml='<div class="progressWrapper" id="'+file.id+'" style="opacity: 1;"><div class="progressContainer blue"><a class="progressCancel" href="#"> </a><div class="progressImg" data="" data1="" data2=""></div><div class="progressName"></div><div class="progressBarStatus">上传成功.</div><div class="progressBarComplete" style=""></div><div class="progressPercent"></div></div></div>'
+                           $('#docUploadProgress').append(filehtml)
+                       }
+
+                    }
+                        var progressImg = $("#"+file.id+" .progressImg");
+                        var progressName=$("#"+file.id+" .progressName")
+
+
+
+                    if(serverData.indexOf("filePath")>0){
+                        filePath =  json.filePath;
+                    }
+                    if(extension=="doc"||extension=="docx"||extension=="DOC"||extension=="DOCX"){
+                        var img = document.createElement("img");
+                        img.src= "/img/word.png";
+                        progressImg.append(img);
+                        $("#"+file.id+" .progressName").html(file.name)
+                        progressImg.attr("data",filePath);
+                        progressImg.attr("data1",json.fileName);
+                        progressImg.attr("data2",json.extension);
+                        img.onclick=function(){
+                            dialog(json.htmlfilePath,filePath);
+                        }
+                        progressName.click(function(){
+                            dialog(json.htmlfilePath,filePath);
+                        });
+
+                    }else if(extension=="pdf"||extension=="PDF"){
+                        var img = document.createElement("img");
+                        img.src= "/img/pdf.png";
+                        progressImg.append(img);
+                        $("#"+file.id+" .progressName").html(file.name)
+                        progressImg.attr("data",filePath);
+                        progressImg.attr("data1",json.fileName);
+                        progressImg.attr("data2",json.extension);
+                        img.onclick=function(){
+                            dialog(json.htmlfilePath,filePath);
+                        }
+                        progressName.click(function(){
+                            dialog(json.htmlfilePath,filePath);
+                        });
+                    }else if(extension=="mp4"||extension=="MP4"){
+                        var video = document.createElement("video");
+                        video.src= filePath;
+                        video.controls="controls";
+                        video.style.width='100%';
+                        video.style.height='100%'
+                        // video.setAttribute("data-original",filePath);
+                        progressImg.append(video);
+                        // progressImg.find("video").attr("src",filePath);
+                        $("#"+file.id+" .progressName").html(file.name).addClass('video-mp4')
+                        progressImg.attr("data",filePath);
+                        progressImg.attr("data1",json.fileName);
+                        progressImg.attr("data2",json.extension);
+                        $("#"+progressTarget).find(".clear").remove();
+                        $("#"+progressTarget).find(".progressWrapper:last-child").after("<div style='clear:both;' class='clear'></div>");
+
+                        // progressName.click(function(){
+                        //     parent.parent.layer.open({
+                        //         type : 1,
+                        //         title : '视频预览',
+                        //         maxmin : true,
+                        //         shadeClose : false, // 点击遮罩关闭层
+                        //         area : [ '800px', '520px' ],
+                        //         content : '<video src="'+filePath+'" style="width:100%;height:99%!important" controls="controls"></video>' // iframe的url
+                        //     });
+                        // });
+
+
+                    }else{
+                        var img = document.createElement("img");
+                        img.src= filePath;
+                        img.setAttribute("data-original",filePath);
+                        progressImg.append(img);
+                        $("#"+file.id+" .progressName").html(file.name)
+                        progressImg.attr("data",filePath);
+                        progressImg.attr("data1",json.fileName);
+                        progressImg.attr("data2",json.extension);
+                        $("#"+progressTarget).find(".clear").remove();
+                        $("#"+progressTarget).find(".progressWrapper:last-child").after("<div style='clear:both;' class='clear'></div>");
+                    }
+
+
+                    progress.setComplete();
+                    progress.setStatus("\u4e0a\u4f20\u6210\u529f.");
+                    progress.toggleCancel(false);
+
+                    if ($("#callback").val()!=null&&$("#callback").val()!='')
+                    {
+                       eval($("#callback").val()+"('"+file+"','"+serverData+"')");
+
+                    }
+
+                }
+
+            } catch (ex) {
+               // alert(ex);
+                this.debug(ex);
+            }
+        }
+
+
+
+        function dialog(url,docPath){
+            $.dialog({
+                title:'<a href="'+docPath+'" target="_blank" style="background-image:url(/img/download.png);width:88px;height:22px;margin-top:10px;display:block;" ></a>',
+                id:'editdialog',
+                width: 920,
+                height: 500,
+                lock:true,
+                min:false,
+                max:false,
+
+                content: 'url:'+url
+            });
+        }
+
+        function queuesComplete(numFilesUploaded) {
+//var status = document.getElementById("divStatus");
+//status.innerHTML = numFilesUploaded + " file" + (numFilesUploaded === 1 ? "" : "s") + " uploaded.";
+        }
+
+        function defaultImage(listImage,listName){
+            if(listImage!=""&&listImage.length==listName.length){
+                for(var i=0;i<listImage.length;i++){
+                    this.fileProgressWrapper = document.createElement("div");
+                    this.fileProgressWrapper.className = "progressWrapper";
+                  //  var progressId = listImage[i].split("\/")[4];
+                    var progressId ='SWFUpload_'+RndNum(12)
+                    this.fileProgressWrapper.id=progressId;
+
+                    this.fileProgressElement = document.createElement("div");
+                    this.fileProgressElement.className = "progressContainer";
+
+                    var progressCancel = document.createElement("a");
+                    progressCancel.className = "progressCancel";
+                    progressCancel.href = "#";
+                    //progressCancel.style.visibility = "hidden";
+                    progressCancel.appendChild(document.createTextNode(" "));
+
+                    var progressImg = document.createElement("a");
+                    progressImg.className = "lightbox progressImg";
+                   // progressImg.href=listImage[i];
+                    progressImg.href='javascript:;'
+                    progressImg.title="";
+                    progressImg.setAttribute("data",listImage[i]);
+                    progressImg.setAttribute("data1",listName[i]);
+                    var extension = listName[i].substring(listName[i].lastIndexOf(".")+1);
+                    progressImg.setAttribute("data2",extension);
+
+                    if(listImage[i].indexOf('.MP4')>0 || listImage[i].indexOf('.mp4') >0){
+                        var video = document.createElement("video");
+                        video.src= listImage[i];
+                        video.controls="controls";
+                        video.style.width='100%';
+                        video.style.height='100%'
+                        video.setAttribute("data-original",listImage[i]);
+                        progressImg.append(video);
+                    }else{
+                        var img = document.createElement("img");
+                        img.src= listImage[i];
+                        progressImg.appendChild(img);
+                    }
+
+                    var progressText = document.createElement("div");
+                    progressText.className = "progressName";
+                    progressText.setAttribute("title",listName[i]);
+                    progressText.appendChild(document.createTextNode(listName[i]));
+
+                    this.fileProgressElement.appendChild(progressCancel);
+                    this.fileProgressElement.appendChild(progressImg);
+
+                    this.fileProgressElement.appendChild(progressText);
+
+                    this.fileProgressWrapper.appendChild(this.fileProgressElement);
+
+                    $("#fsUploadProgress").append(this.fileProgressWrapper);
+                    $("#fsUploadProgress").find(".clear").remove();
+                    $("#fsUploadProgress").find(".progressWrapper:last-child").after("<div style='clear:both;' class='clear'></div>");
+                    var main = $(window.parent.document).find("#docUpload");
+                    var thisheight = $(document).height() + 40;
+                    main.height(thisheight);
+                    $(".progressWrapper .progressCancel").click(function(){
+                        var filePath = $(this).siblings(".progressImg").find("img").attr("src");
+                        $(this).parent().parent().remove();
+                        $.ajax({
+                            url: "/common/sysFile/remove",
+                            type: "post",
+                            data: {
+                                'url': filePath
+                            },
+                            success: function (r) {
+                                if (r.code == 0) {
+
+                                }
+                            }
+                        });
+                    });
+                }
+            }
+        }
+        function defaultDoc(listImage,listName,type){//假若只是查看不是编辑，type=1
+            if(listImage!=""&&listImage.length==listName.length){
+                for (var i = 0; i < listImage.length; i++) {
+                    this.fileProgressWrapper = document.createElement("div");
+                    this.fileProgressWrapper.className = "progressWrapper";
+                    // var progressId = listImage[i].split("\/")[4];
+                    var progressId = 'SWFUpload_' + RndNum(12)
+                    this.fileProgressWrapper.id = progressId;
+
+                    this.fileProgressElement = document.createElement("div");
+                    this.fileProgressElement.className = "progressContainer";
+                    if (!type) {
+                        var progressCancel = document.createElement("a");
+                        progressCancel.className = "progressCancel";
+                        progressCancel.href = "#";
+                        //progressCancel.style.visibility = "hidden";
+                        progressCancel.appendChild(document.createTextNode(" "));
+
+                    }
+
+                    var progressImg = document.createElement("a");
+                    progressImg.className = "lightbox progressImg";
+                   // progressImg.href=listImage[i];
+                    progressImg.href='javascript:;';
+                    progressImg.title="123";
+                    progressImg.setAttribute("data",listImage[i]);
+                    progressImg.setAttribute("data1",listName[i]);
+                    var extension = listName[i].substring(listName[i].lastIndexOf(".")+1);
+                    progressImg.setAttribute("data2",extension);
+                    var img = document.createElement("img");
+                    if(extension=="pdf"||extension=="PDF"){
+                        img.src= "/img/pdf.png";
+                    }else{
+                        img.src= "/img/word.png";
+                    }
+                    progressImg.appendChild(img);
+
+                    var progressText = document.createElement("div");
+                    progressText.className = "progressName";
+                    progressText.setAttribute("title",listName[i]);
+                    progressText.appendChild(document.createTextNode(listName[i]));
+                    if (!type) {
+                        this.fileProgressElement.appendChild(progressCancel);
+                    }
+
+                    this.fileProgressElement.appendChild(progressImg);
+                    this.fileProgressElement.appendChild(progressText);
+                    this.fileProgressWrapper.appendChild(this.fileProgressElement);
+                    var main = $(window.parent.document).find("#docUpload");
+                    var thisheight = $(document).height() + 40;
+                    main.height(thisheight);
+                    $("#docUploadProgress").append(this.fileProgressWrapper);
+                    if (!type) {
+                        $(".progressWrapper .progressCancel").click(function () {
+                            var filePath = $(this).siblings(".progressImg").find("img").attr("src");
+                            $(this).parent().parent().remove();
+                            $.ajax({
+                                url: "/common/sysFile/remove",
+                                type: "post",
+                                data: {
+                                    'url': filePath
+                                },
+                                success: function (r) {
+                                    if (r.code == 0) {
+
+                                    }
+                                }
+                            });
+                        });
+                    }
+
+                    $(progressText).attr('data1')
+                    $(progressText).click(function(){
+                        var type=$(this).prev().attr('data').split('.')[1]
+                        if(type=='pdf'){
+                            dialog($(this).prev().attr('data'),$(this).prev().attr('data'))
+                        }else{
+
+
+                            dialog($(this).prev().attr('data').split('.')[0]+'.html', $(this).prev().attr('data'));
+
+                            // var a = document.createElement("a");
+                            // a.href = $(this).prev().attr('data')
+                            // a.download =$(this).attr('title')?$(this).attr('title'):$(this).prev().attr('data');
+                            // a.click();
+                        }
+                    })
+                }
+            }
+        }
+
+    </script>
+    <style>
+        #fsUploadProgress:before,#fsUploadProgress:after{
+            display: table;
+            content: " ";
+        }
+        #fsUploadProgress:after{
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+<div id="content">
+    <input type="hidden" id="url" th:value="${url}"/>
+    <input type="hidden" id="ext" th:value="${ext}" />
+    <input type="hidden" id="sizelimit" th:value="${sizelimit}" />
+    <input type="hidden" id="btn" th:value="${btn}"/>
+    <input type="hidden" id="callback" th:value="${callback}" />
+    <!--<input type="hidden" id="url" value="/common/sysFile/mutilpFileUpload"/>-->
+    <!--<input type="hidden" id="ext" value="*.jpg;*.bmp;*.png;*.doc;*.docx;*.pdf" />-->
+    <!--<input type="hidden" id="sizelimit"  value="imit=5" />-->
+    <!--<input type="hidden" id="btn" value="上传附件" />-->
+    <!--<input type="hidden" id="callback" value="parent.uploadSuccess" />-->
+    <div>
+        <span id="spanButtonPlaceHolder"></span>
+        <span style="font-size:12px;color:#999;" id="geshi"></span>
+    </div>
+    <div id="fsUploadProgress" style="">
+    </div>
+    <div id="docUploadProgress" style="">
+    </div>
+</div>
+    <!--<div id="videoProgress" class="clearfis"  ></div>-->
+</body>
+</html>

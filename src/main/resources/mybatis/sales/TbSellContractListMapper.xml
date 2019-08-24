@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.sales.dao.TbSellContractListDao">
+
+	<select id="get" resultType="com.bootdo.sales.domain.TbSellContractListDO">
+		select `list_guid`,`contract_guid`,`construction_part`,`concrete_strength_grade`,`concrete_slump`,`concrete_plan_amount`,`oncrete_actual_amount`,`is_delete`,`unit_price` from tb_sell_contract_list where list_guid = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.sales.domain.TbSellContractListDO">
+		select `list_guid`,`contract_guid`,`construction_part`,`concrete_strength_grade`,`concrete_slump`,`concrete_plan_amount`,`oncrete_actual_amount`,`is_delete`,`unit_price` from tb_sell_contract_list
+        <where>  
+		  		  <if test="listGuid != null and listGuid != ''"> and list_guid = #{listGuid} </if>
+		  		  <if test="contractGuid != null and contractGuid != ''"> and contract_guid = #{contractGuid} </if>
+		  		  <if test="constructionPart != null and constructionPart != ''"> and construction_part = #{constructionPart} </if>
+		  		  <if test="concreteStrengthGrade != null and concreteStrengthGrade != ''"> and concrete_strength_grade = #{concreteStrengthGrade} </if>
+		  		  <if test="concreteSlump != null and concreteSlump != ''"> and concrete_slump = #{concreteSlump} </if>
+		  		  <if test="concretePlanAmount != null and concretePlanAmount != ''"> and concrete_plan_amount = #{concretePlanAmount} </if>
+		  		  <if test="oncreteActualAmount != null and oncreteActualAmount != ''"> and oncrete_actual_amount = #{oncreteActualAmount} </if>
+		  		  <if test="isDelete != null and isDelete != ''"> and is_delete = #{isDelete} </if>
+		  		  <if test="unitPrice != null and unitPrice != ''"> and unit_price = #{unitPrice} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by list_guid desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from tb_sell_contract_list
+		 <where>  
+		  		  <if test="listGuid != null and listGuid != ''"> and list_guid = #{listGuid} </if>
+		  		  <if test="contractGuid != null and contractGuid != ''"> and contract_guid = #{contractGuid} </if>
+		  		  <if test="constructionPart != null and constructionPart != ''"> and construction_part = #{constructionPart} </if>
+		  		  <if test="concreteStrengthGrade != null and concreteStrengthGrade != ''"> and concrete_strength_grade = #{concreteStrengthGrade} </if>
+		  		  <if test="concreteSlump != null and concreteSlump != ''"> and concrete_slump = #{concreteSlump} </if>
+		  		  <if test="concretePlanAmount != null and concretePlanAmount != ''"> and concrete_plan_amount = #{concretePlanAmount} </if>
+		  		  <if test="oncreteActualAmount != null and oncreteActualAmount != ''"> and oncrete_actual_amount = #{oncreteActualAmount} </if>
+		  		  <if test="isDelete != null and isDelete != ''"> and is_delete = #{isDelete} </if>
+		  		  <if test="unitPrice != null and unitPrice != ''"> and unit_price = #{unitPrice} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.sales.domain.TbSellContractListDO">
+		insert into tb_sell_contract_list
+		(
+			`list_guid`, 
+			`contract_guid`, 
+			`construction_part`, 
+			`concrete_strength_grade`, 
+			`concrete_slump`, 
+			`concrete_plan_amount`, 
+			`oncrete_actual_amount`, 
+			`is_delete`, 
+			`unit_price`
+		)
+		values
+		(
+			#{listGuid}, 
+			#{contractGuid}, 
+			#{constructionPart}, 
+			#{concreteStrengthGrade}, 
+			#{concreteSlump}, 
+			#{concretePlanAmount}, 
+			#{oncreteActualAmount}, 
+			#{isDelete}, 
+			#{unitPrice}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.sales.domain.TbSellContractListDO">
+		update tb_sell_contract_list 
+		<set>
+			<if test="contractGuid != null">`contract_guid` = #{contractGuid}, </if>
+			<if test="constructionPart != null">`construction_part` = #{constructionPart}, </if>
+			<if test="concreteStrengthGrade != null">`concrete_strength_grade` = #{concreteStrengthGrade}, </if>
+			<if test="concreteSlump != null">`concrete_slump` = #{concreteSlump}, </if>
+			<if test="concretePlanAmount != null">`concrete_plan_amount` = #{concretePlanAmount}, </if>
+			<if test="oncreteActualAmount != null">`oncrete_actual_amount` = #{oncreteActualAmount}, </if>
+			<if test="isDelete != null">`is_delete` = #{isDelete}, </if>
+			<if test="unitPrice != null">`unit_price` = #{unitPrice}</if>
+		</set>
+		where list_guid = #{listGuid}
+	</update>
+	
+	<delete id="remove">
+		delete from tb_sell_contract_list where contract_guid = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from tb_sell_contract_list where list_guid in 
+		<foreach item="listGuid" collection="array" open="(" separator="," close=")">
+			#{listGuid}
+		</foreach>
+	</delete>
+
+</mapper>
